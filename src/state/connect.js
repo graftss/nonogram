@@ -1,4 +1,4 @@
-import actions from './actions';
+import * as actions from './actions';
 import connectFactory from './connectFactory';
 import selectors from './selectors';
 
