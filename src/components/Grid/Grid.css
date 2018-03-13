@@ -1,0 +1,9 @@
+.grid {
+  border: 1px solid red;
+  height: 50vh;
+  width: 50vh;
+
+  display: grid;
+  grid-gap: 0px;
+  grid-template-columns: repeat(3, 1fr);
+}
