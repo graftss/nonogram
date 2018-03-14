@@ -28,10 +28,9 @@
 .constraints-v {
   margin: 0 auto;
   text-align: center;
-
+  font-size: 1.2em;
   display: grid;
   width: 60vh;
-  font-size: 1.5em;
 }
 
 .constraints-h {
@@ -39,7 +38,7 @@
   vertical-align: top;
   width: calc(50vw - 30vh);
   height: 60vh;
-
+  font-size: 1.2em;
   display: inline-grid;
   grid-auto-flow: row;
 }
@@ -50,11 +49,11 @@
 
 .constraints-h-number {
   margin-left: 3px;
-  font-size: 1.5em;
 }
 
 .palette-container {
   display: inline-block;
+  vertical-align: top;
   margin-left: 10vh;
 }
 

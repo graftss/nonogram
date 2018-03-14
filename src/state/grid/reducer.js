@@ -17,7 +17,7 @@ const toggleCellState = (activeCellState, cellState) => {
 const initialState = {
   cellStates: {},
   dragStates: {},
-  size: 4,
+  size: 10,
   dragSource: undefined,
   dropTarget: undefined,
   activeCellState: CELL_STATES.FILLED,
