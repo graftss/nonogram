@@ -12,3 +12,5 @@ export const gridSize = prop('size');
 export const constraintsV = prop('constraintsV');
 
 export const constraintsH = prop('constraintsH');
+
+export const activeCellState = prop('activeCellState');

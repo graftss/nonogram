@@ -52,3 +52,26 @@
   margin-left: 3px;
   font-size: 1.5em;
 }
+
+.palette-container {
+  display: inline-block;
+  margin-left: 10vh;
+}
+
+.palette {
+  width: 5vh;
+  height: 5vh;
+  border: 1px solid lightgrey;
+}
+
+.palette-active {
+  border: 2px solid red;
+}
+
+.palette-filled {
+  background-color: black;
+}
+
+.palette-unfilled {
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M1 0 L0 1 L99 100 L100 99' fill='black' /><path d='M0 99 L99 0 L100 1 L1 100' fill='black' /></svg>");
+}

@@ -102,6 +102,12 @@ export default (state = initialState, action) => {
       };
     }
 
+    case TYPES.GRID_SET_ACTIVE_CELL_STATE: {
+      const { cellState } = payload;
+
+      return { ...state, activeCellState: cellState };
+    }
+
     default: return state;
   }
 }
