@@ -47,3 +47,8 @@ export const indicesInRect = (size, source, target) => {
 
   return result;
 };
+
+export const longestEltLength = lists => lists.reduce(
+  (acc, next) => Math.max(acc, next.length),
+  0,
+);

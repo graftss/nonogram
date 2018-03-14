@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Container } from 'semantic-ui-react';
 
 import Grid from '../Grid';
-import Constraints from '../Constraints';
+import ConstraintsV from '../ConstraintsV';
+import ConstraintsH from '../ConstraintsH';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Constraints />
+        <ConstraintsV />
+        <ConstraintsH />
         <Grid />
       </div>
     );

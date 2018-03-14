@@ -3,7 +3,7 @@
   width: 60vh;
   margin: 0 auto;
 
-  display: grid;
+  display: inline-grid;
   grid-gap: 0px;
 }
 
@@ -19,11 +19,30 @@
   padding: 1px;
 }
 
-.constraints {
+.constraints-v {
   margin: 0 auto;
   text-align: center;
 
   display: grid;
   width: 60vh;
+  font-size: 1.5em;
+}
 
+.constraints-h {
+  text-align: right;
+  vertical-align: top;
+  width: calc(50vw - 30vh);
+  height: 60vh;
+
+  display: inline-grid;
+  grid-auto-flow: row;
+}
+
+.constraints-h-cell {
+  margin: auto 0;
+}
+
+.constraints-h-number {
+  margin-left: 3px;
+  font-size: 1.5em;
 }

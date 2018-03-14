@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 
 import connect from '../../state/connect';
+import { longestEltLength } from '../../utils';
 
 const connections = {
   selectors: ['gridSize', 'constraintsV'],
 };
 
-const longestEltLength = lists => lists.reduce(
-  (acc, next) => Math.max(acc, next.length),
-  0,
-);
-
-class Constraints extends Component {
+class ConstraintsV extends Component {
   getStyle() {
     const { gridSize } = this.props;
 
@@ -21,7 +17,7 @@ class Constraints extends Component {
     };
   }
 
-  renderConstraintsV() {
+  renderConstraints() {
     const { constraintsV } = this.props;
     const result = [];
 
@@ -41,11 +37,11 @@ class Constraints extends Component {
   render() {
 
     return (
-      <div className="constraints" style={this.getStyle()}>
-        {this.renderConstraintsV()}
+      <div className="constraints-v" style={this.getStyle()}>
+        {this.renderConstraints()}
       </div>
     );
   }
 }
 
-export default connect(connections)(Constraints);
+export default connect(connections)(ConstraintsV);
