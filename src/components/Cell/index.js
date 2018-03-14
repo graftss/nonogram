@@ -10,6 +10,7 @@ const cellSource = {
 
 const dragCollect = (connect, monitor) => {
   return {
+    connectDragPreview: connect.dragPreview(),
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging(),
   };
@@ -33,6 +34,12 @@ const dropCollect = (connect, monitor) => {
 };
 
 class Cell extends Component {
+  componentDidMount() {
+    const img = new Image();
+    img.onload = () => this.props.connectDragPreview(img);
+    img.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+  }
+
   componentDidUpdate(prevProps) {
     const {
       index,

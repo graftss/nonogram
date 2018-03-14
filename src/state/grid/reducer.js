@@ -4,7 +4,7 @@ import { TYPES } from './actions';
 
 const initialState = {
   filled: {},
-  size: 4,
+  size: 10,
   dragSource: undefined,
   dropTarget: undefined,
   dragging: false,
@@ -43,6 +43,8 @@ const toggleFill = (state, index) => {
   return assocPath(['filled', index], !currentFill, state);
 };
 
+const setFill = fill => (state, index) => assocPath(['filled', index], fill, state);
+
 export default (state = initialState, action) => {
   const { payload, type } = action;
 
@@ -79,9 +81,10 @@ export default (state = initialState, action) => {
       const { index } = payload;
       const { dragSource } = state;
 
+      const currentFill = state.filled[dragSource];
       const toggledIndices = indicesInRect(state.size, dragSource, index);
 
-      return toggledIndices.reduce(toggleFill, state);
+      return toggledIndices.reduce(setFill(!currentFill), state);
     }
 
     default: return state;
