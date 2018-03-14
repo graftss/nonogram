@@ -6,6 +6,10 @@ const cellSource = {
   beginDrag(props) {
     return { index: props.index };
   },
+
+  endDrag(props) {
+    props.onCancelDrag();
+  }
 };
 
 const dragCollect = (connect, monitor) => {
@@ -22,6 +26,7 @@ const cellTarget = {
   },
 
   drop(props, monitor) {
+    console.log("ending drag");
     props.onEndDrag(props.index);
   },
 };

@@ -71,6 +71,14 @@ export default (state = initialState, action) => {
       };
     }
 
+    case TYPES.GRID_CANCEL_DRAG: {
+      return {
+        ...state,
+        dragging: false,
+        dragFilled: {},
+      };
+    }
+
     default: return state;
   }
 }

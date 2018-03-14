@@ -9,7 +9,13 @@ import Cell from '../Cell';
 import { indexToCoords } from '../../utils';
 
 const connections = {
-  actions: ['beginDrag', 'dragOver', 'endDrag', 'toggleCell'],
+  actions: [
+    'beginDrag',
+    'cancelDrag',
+    'dragOver',
+    'endDrag',
+    'toggleCell',
+  ],
   selectors: ['isCellFilled', 'gridSize'],
 }
 
@@ -39,6 +45,10 @@ class PuzzleGrid extends Component {
     this.props.endDrag(index);
   }
 
+  onCellCancelDrag = () => {
+    this.props.cancelDrag();
+  }
+
   render() {
     const {
       isCellFilled,
@@ -55,6 +65,7 @@ class PuzzleGrid extends Component {
             index={index}
             key={index}
             onBeginDrag={this.onBeginDrag}
+            onCancelDrag={this.onCellCancelDrag}
             onClick={this.onCellClick}
             onDragOver={this.onCellDragOver}
             onEndDrag={this.onCellEndDrag}
