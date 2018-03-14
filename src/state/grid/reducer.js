@@ -18,14 +18,13 @@ const toggleCellState = (activeCellState, cellState) => {
 const initialState = {
   cellStates: {},
   dragStates: {},
-  size: 10,
+  size: 4,
   dragSource: undefined,
   dropTarget: undefined,
   activeCellState: CELL_STATES.FILLED,
   dragging: false,
-  constraintsV: [[1, 2], [1], [1], [1], [1], [1, 3, 5, 7], [1], [1], [1], [1]],
-  // constraintsH: [[0, 0, 1], [0, 1, 2], [1, 2, 3], [0, 0, 1], [0, 0, 1], [0, 0, 1], [1, 7, 9], [0, 0, 1], [0, 0, 1], [0, 0, 1]],
-  constraintsH: [[1], [1, 2], [1, 2, 3], [1], [1], [1], [1, 7, 9], [1], [1], [1]],
+  constraintsV: [[2], [], [1], [1], [1], [1], [1], [1], [1], [1]],
+  constraintsH: [[1], [1], [1], [1], [1], [1], [1], [1], [1], [1]],
 };
 
 const toggleFill = (state, index) => {
@@ -51,7 +50,7 @@ export default (state = initialState, action) => {
       const { index } = payload;
 
       const nextState = toggleFill(state, index);
-      validate(state);
+      console.log(validate(nextState));
       return nextState;
     }
 

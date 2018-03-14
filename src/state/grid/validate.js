@@ -10,7 +10,9 @@ const column = curry((size, cellStates, index) => (
   props(range(0, size).map(i => i * size + index), cellStates)
 ));
 
-const isFilled = state => ![CELL_STATES.EMPTY, CELL_STATES.UNFILLED].includes(state);
+const isFilled = state => (
+  ![CELL_STATES.EMPTY, CELL_STATES.UNFILLED, undefined].includes(state)
+);
 
 export const validateSegment = (cellStates, constraint) => {
   const blocks = [];
@@ -40,6 +42,16 @@ export default ({
   constraintsH,
   constraintsV,
 }) => {
+  const getRow = row(size, cellStates);
+  const getColumn = column(size, cellStates);
 
+  const checkRow = index => validateSegment(getRow(index), constraintsH[index]);
+  const checkColumn = index => validateSegment(getColumn(index), constraintsV[index]);
 
+  for (let i = 0; i < size; i++) {
+    if (!checkRow(i)) return false;
+    if (!checkColumn(i)) return false;
+  }
+
+  return true;
 };
