@@ -5,6 +5,7 @@ import { indicesInRect } from '../../utils';
 
 const initialState = {
   filled: {},
+  dragFilled: {},
   size: 10,
   dragSource: undefined,
   dropTarget: undefined,
@@ -17,6 +18,7 @@ const toggleFill = (state, index) => {
 };
 
 const setFill = fill => (state, index) => assocPath(['filled', index], fill, state);
+const setDragFill = fill => (s, i) => assocPath(['dragFilled', i], fill, s);
 
 export default (state = initialState, action) => {
   const { payload, type } = action;
@@ -42,9 +44,14 @@ export default (state = initialState, action) => {
 
     case TYPES.GRID_DRAG_OVER: {
       const { index } = payload;
+      const { dragSource, size } = state;
+
+      const currentFill = state.filled[dragSource];
+      const indices = indicesInRect(size, dragSource, index);
+      state.dragFilled = {};
 
       return {
-        ...state,
+        ...indices.reduce(setDragFill(!currentFill), state),
         dropTarget: index,
         dragging: true,
       };
@@ -52,12 +59,16 @@ export default (state = initialState, action) => {
 
     case TYPES.GRID_END_DRAG: {
       const { index } = payload;
-      const { dragSource } = state;
+      const { dragSource, size } = state;
 
       const currentFill = state.filled[dragSource];
-      const toggledIndices = indicesInRect(state.size, dragSource, index);
+      const indices = indicesInRect(size, dragSource, index);
 
-      return toggledIndices.reduce(setFill(!currentFill), state);
+      return {
+        ...indices.reduce(setFill(!currentFill), state),
+        dragging: false,
+        dragFilled: {},
+      };
     }
 
     default: return state;
