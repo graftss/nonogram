@@ -1,6 +1,7 @@
 .grid {
-  height: 50vh;
-  width: 50vh;
+  height: 60vh;
+  width: 60vh;
+  margin: 0 auto;
 
   display: grid;
   grid-gap: 0px;
