@@ -6,7 +6,6 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import './Grid.css';
 import connect from '../../state/connect';
 import Cell from '../Cell';
-import { indexToCoords } from '../../utils';
 
 const connections = {
   actions: [
@@ -16,7 +15,10 @@ const connections = {
     'endDrag',
     'toggleCell',
   ],
-  selectors: ['isCellFilled', 'gridSize'],
+  selectors: [
+    'cellState',
+    'gridSize',
+  ],
 }
 
 class PuzzleGrid extends Component {
@@ -29,29 +31,19 @@ class PuzzleGrid extends Component {
     };
   }
 
-  onBeginDrag = index => {
-    this.props.beginDrag(index);
-  }
+  onBeginDrag = index => this.props.beginDrag(index);
 
-  onCellClick = index => {
-    this.props.toggleCell(index);
-  }
+  onCellClick = index => this.props.toggleCell(index);
 
-  onCellDragOver = index => {
-    this.props.dragOver(index);
-  }
+  onCellDragOver = index => this.props.dragOver(index);
 
-  onCellEndDrag = index => {
-    this.props.endDrag(index);
-  }
+  onCellEndDrag = index => this.props.endDrag(index);
 
-  onCellCancelDrag = () => {
-    this.props.cancelDrag();
-  }
+  onCellCancelDrag = () => this.props.cancelDrag();
 
   render() {
     const {
-      isCellFilled,
+      cellState,
       gridSize,
     } = this.props;
 
@@ -61,7 +53,7 @@ class PuzzleGrid extends Component {
       <div className="grid" style={this.getStyle()}>
         {cells.map(index => (
           <Cell
-            filled={isCellFilled(index)}
+            cellState={cellState(index)}
             index={index}
             key={index}
             onBeginDrag={this.onBeginDrag}

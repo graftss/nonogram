@@ -1,11 +1,23 @@
 import { assocPath } from 'ramda';
 
 import { TYPES } from './actions';
+import { CELL_STATES } from '../constants';
 import { indicesInRect } from '../../utils';
 
+const toggleCellState = cellState => {
+  switch (cellState) {
+    case CELL_STATES.EMPTY: return CELL_STATES.FILLED;
+
+    case CELL_STATES.FILLED:
+    case CELL_STATES.UNFILLED: return CELL_STATES.EMPTY;
+
+    default: return CELL_STATES.FILLED;
+  }
+};
+
 const initialState = {
-  filled: {},
-  dragFilled: {},
+  cellStates: {},
+  dragStates: {},
   size: 10,
   dragSource: undefined,
   dropTarget: undefined,
@@ -13,12 +25,15 @@ const initialState = {
 };
 
 const toggleFill = (state, index) => {
-  const currentFill = state.filled[index];
-  return assocPath(['filled', index], !currentFill, state);
+  const currentFill = state.cellStates[index];
+  return assocPath(['cellStates', index], toggleCellState(currentFill), state);
 };
 
-const setFill = fill => (state, index) => assocPath(['filled', index], fill, state);
-const setDragFill = fill => (s, i) => assocPath(['dragFilled', i], fill, s);
+const setFill = fill => (state, index) => (
+  assocPath(['cellStates', index], fill, state)
+);
+
+const setDragFill = fill => (s, i) => assocPath(['dragStates', i], fill, s);
 
 export default (state = initialState, action) => {
   const { payload, type } = action;
@@ -27,10 +42,7 @@ export default (state = initialState, action) => {
     case TYPES.GRID_TOGGLE_CELL: {
       const { index } = payload;
 
-      return {
-        ...state,
-        filled: { ...state.filled, [index]: !state.filled[index] },
-      };
+      return toggleFill(state, index);
     }
 
     case TYPES.GRID_BEGIN_DRAG: {
@@ -46,12 +58,12 @@ export default (state = initialState, action) => {
       const { index } = payload;
       const { dragSource, size } = state;
 
-      const currentFill = state.filled[dragSource];
+      const cellState = state.cellStates[dragSource];
       const indices = indicesInRect(size, dragSource, index);
-      state.dragFilled = {};
+      state.dragStates = {};
 
       return {
-        ...indices.reduce(setDragFill(!currentFill), state),
+        ...indices.reduce(setDragFill(toggleCellState(cellState)), state),
         dropTarget: index,
         dragging: true,
       };
@@ -61,13 +73,13 @@ export default (state = initialState, action) => {
       const { index } = payload;
       const { dragSource, size } = state;
 
-      const currentFill = state.filled[dragSource];
+      const cellState = state.cellStates[dragSource];
       const indices = indicesInRect(size, dragSource, index);
 
       return {
-        ...indices.reduce(setFill(!currentFill), state),
+        ...indices.reduce(setFill(toggleCellState(cellState)), state),
         dragging: false,
-        dragFilled: {},
+        dragStates: {},
       };
     }
 
@@ -75,7 +87,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         dragging: false,
-        dragFilled: {},
+        dragStates: {},
       };
     }
 

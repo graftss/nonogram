@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { compose } from 'ramda';
 import { DragSource, DropTarget } from 'react-dnd';
 
+import { CELL_STATES } from '../../state/constants';
+
 const cellSource = {
   beginDrag(props) {
     return { index: props.index };
@@ -26,7 +28,6 @@ const cellTarget = {
   },
 
   drop(props, monitor) {
-    console.log("ending drag");
     props.onEndDrag(props.index);
   },
 };
@@ -64,14 +65,24 @@ class Cell extends Component {
     }
   }
 
+  innerCellClass() {
+    switch (this.props.cellState) {
+      case undefined:
+      case CELL_STATES.EMPTY: return '';
+
+      case CELL_STATES.FILLED: return 'filled';
+
+      case CELL_STATES.UNFILLED: return 'unfilled';
+
+      default: return '';
+    }
+  }
+
   render() {
     const {
       connectDragSource,
       connectDropTarget,
-      filled,
       index,
-      isDragging,
-      isOver,
       onClick,
     } = this.props;
 
@@ -80,7 +91,7 @@ class Cell extends Component {
         className="cell"
         onClick={() => onClick(index)}
       >
-        <div className={filled ? 'filled' : ''}>
+        <div className={this.innerCellClass()}>
         </div>
       </div>
     ));

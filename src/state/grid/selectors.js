@@ -1,10 +1,10 @@
-import { curry, path, prop } from 'ramda';
+import { curry, prop } from 'ramda';
 
-export const isCellFilled = curry(
+export const cellState = curry(
   (state, index) => {
-    const dragFilled = state.dragFilled[index];
-    return dragFilled === undefined ? state.filled[index] : dragFilled;
+    const dragState = state.dragStates[index];
+    return dragState === undefined ? state.cellStates[index] : dragState;
   }
-)
+);
 
 export const gridSize = prop('size');
