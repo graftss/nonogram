@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 
-import connect from '../../state/connect';
 import { longestEltLength } from '../../utils';
-
-const connections = {
-  selectors: ['gridSize', 'constraintsV'],
-};
 
 class ConstraintsV extends Component {
   getStyle() {
@@ -35,7 +30,6 @@ class ConstraintsV extends Component {
   }
 
   render() {
-
     return (
       <div className="constraints-v" style={this.getStyle()}>
         {this.renderConstraints()}
@@ -44,4 +38,4 @@ class ConstraintsV extends Component {
   }
 }
 
-export default connect(connections)(ConstraintsV);
+export default ConstraintsV;

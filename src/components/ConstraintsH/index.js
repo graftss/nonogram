@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
 
-import connect from '../../state/connect';
-
-const connections = {
-  selectors: ['gridSize', 'constraintsH'],
-};
-
 class ConstraintsH extends Component {
   getStyle() {
     const { gridSize } = this.props;
@@ -34,7 +28,6 @@ class ConstraintsH extends Component {
   }
 
   render() {
-
     return (
       <div className="constraints-h" style={this.getStyle()}>
         {this.renderConstraints()}
@@ -43,4 +36,4 @@ class ConstraintsH extends Component {
   }
 }
 
-export default connect(connections)(ConstraintsH);
+export default ConstraintsH;
