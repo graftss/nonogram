@@ -35,6 +35,7 @@ const dropCollect = (connect, monitor) => {
 
 class Cell extends Component {
   componentDidMount() {
+    // minimal (transparent) empty image
     const img = new Image();
     img.onload = () => this.props.connectDragPreview(img);
     img.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
@@ -71,10 +72,11 @@ class Cell extends Component {
 
     return connectDropTarget(connectDragSource(
       <div
-        className={filled ? 'filled' : ''}
+        className="cell"
         onClick={() => onClick(index)}
       >
-        .
+        <div className={filled ? 'filled' : ''}>
+        </div>
       </div>
     ));
   }

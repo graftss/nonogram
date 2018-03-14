@@ -6,6 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import './Grid.css';
 import connect from '../../state/connect';
 import Cell from '../Cell';
+import { indexToCoords } from '../../utils';
 
 const connections = {
   actions: ['beginDrag', 'dragOver', 'endDrag', 'toggleCell'],

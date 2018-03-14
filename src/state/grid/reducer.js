@@ -1,6 +1,7 @@
 import { assocPath } from 'ramda';
 
 import { TYPES } from './actions';
+import { indicesInRect } from '../../utils';
 
 const initialState = {
   filled: {},
@@ -8,34 +9,6 @@ const initialState = {
   dragSource: undefined,
   dropTarget: undefined,
   dragging: false,
-};
-
-const indexToCoords = (size, index) => [index % size, Math.floor(index / size)];
-const coordsToIndex = (size, coords) => coords[0] + coords[1] * size;
-
-const indicesInRect = (size, source, target) => {
-  const sourceCoords = indexToCoords(size, source);
-  const targetCoords = indexToCoords(size, target);
-
-  const xRange = [
-    Math.min(sourceCoords[0], targetCoords[0]),
-    Math.max(sourceCoords[0], targetCoords[0]),
-  ];
-
-  const yRange = [
-    Math.min(sourceCoords[1], targetCoords[1]),
-    Math.max(sourceCoords[1], targetCoords[1]),
-  ];
-
-  const result = [];
-
-  for (let x = xRange[0]; x <= xRange[1]; x++) {
-    for (let y = yRange[0]; y <= yRange[1]; y++) {
-      result.push(coordsToIndex(size, [x, y]));
-    }
-  }
-
-  return result;
 };
 
 const toggleFill = (state, index) => {
