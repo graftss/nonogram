@@ -22,6 +22,8 @@ const initialState = {
   dragSource: undefined,
   dropTarget: undefined,
   dragging: false,
+  constraintsV: [[1, 2], [1], [1], [1], [1], [1, 3, 5, 7], [1], [1], [1], [1]],
+  constraintsH: [[1], [1], [1], [1], [1], [1], [1], [1], [1], [1]],
 };
 
 const toggleFill = (state, index) => {
