@@ -1,49 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Route, Switch } from 'react-router';
 
-import ConstraintsV from '../ConstraintsV';
-import ConstraintsH from '../ConstraintsH';
-import Grid from '../Grid';
-import Palette from '../Palette';
-import connect from '../../state/connect';
+import PuzzleRoute from '../PuzzleRoute';
 
-const connections = {
-  actions: ['setActiveCellState'],
-  selectors: [
-    'activeCellState',
-    'constraintsH',
-    'constraintsV',
-    'gridSize',
-  ],
-};
-
-class App extends Component {
-  render() {
-    const {
-      activeCellState,
-      gridSize,
-      constraintsH,
-      constraintsV,
-      setActiveCellState,
-    } = this.props;
-
-    return (
-      <div className="App">
-        <ConstraintsV
-          gridSize={gridSize}
-          constraintsV={constraintsV}
-        />
-        <ConstraintsH
-          gridSize={gridSize}
-          constraintsH={constraintsH}
-        />
-        <Grid />
-        <Palette
-          activeCellState={activeCellState}
-          setActiveCellState={setActiveCellState}
-        />
-      </div>
-    );
-  }
-}
-
-export default connect(connections)(App);
+export default () => (
+  <div>
+    <Switch>
+      <Route path="/puzzle/:id" component={PuzzleRoute} />
+    </Switch>
+  </div>
+);

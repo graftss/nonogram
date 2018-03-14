@@ -21,7 +21,7 @@ const connections = {
   ],
 }
 
-class PuzzleGrid extends Component {
+class Grid extends Component {
   getStyle() {
     const { gridSize } = this.props;
 
@@ -74,4 +74,4 @@ const draggable = DragDropContext(HTML5Backend);
 export default compose(
   connected,
   draggable,
-)(PuzzleGrid);
+)(Grid);

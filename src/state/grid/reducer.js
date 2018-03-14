@@ -2,7 +2,6 @@ import { assocPath } from 'ramda';
 
 import { TYPES } from './actions';
 import { CELL_STATES } from '../constants';
-import validate from './validate';
 import { indicesInRect } from '../../utils';
 
 const toggleCellState = (activeCellState, cellState) => {
@@ -49,9 +48,7 @@ export default (state = initialState, action) => {
     case TYPES.GRID_TOGGLE_CELL: {
       const { index } = payload;
 
-      const nextState = toggleFill(state, index);
-      console.log(validate(nextState));
-      return nextState;
+      return toggleFill(state, index);
     }
 
     case TYPES.GRID_BEGIN_DRAG: {
