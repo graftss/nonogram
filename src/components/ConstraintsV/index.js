@@ -18,13 +18,13 @@ class ConstraintsV extends Component {
   }
 
   renderConstraints() {
-    const { constraintsV } = this.props;
+    const { constraintsV, gridSize } = this.props;
     const result = [];
 
     const maxY = longestEltLength(constraintsV);
 
     for (let y = maxY - 1; y >= 0; y--) {
-      for (let x = 0; x < constraintsV.length; x++) {
+      for (let x = 0; x < gridSize; x++) {
         result.push(
           <div key={`${x},${y}`}>{constraintsV[x][y]}</div>
         );

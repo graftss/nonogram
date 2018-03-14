@@ -17,10 +17,10 @@ class ConstraintsH extends Component {
   }
 
   renderConstraints() {
-    const { constraintsH } = this.props;
+    const { constraintsH, gridSize } = this.props;
     const result = [];
 
-    for (let y = 0; y < constraintsH.length; y++) {
+    for (let y = 0; y < gridSize; y++) {
       result.push(
         <div key={y} className="constraints-h-cell">
           {constraintsH[y].map((num, index) => (
