@@ -17,11 +17,11 @@ const dragCollect = (connect, monitor) => {
 
 const cellTarget = {
   canDrop(props) {
-    return (props.index === 15);
+    return true;
   },
 
   drop(props, monitor) {
-    console.log('drop top', { props });
+    props.onEndDrag(props.index);
   },
 };
 
@@ -33,6 +33,24 @@ const dropCollect = (connect, monitor) => {
 };
 
 class Cell extends Component {
+  componentDidUpdate(prevProps) {
+    const {
+      index,
+      isDragging,
+      isOver,
+      onBeginDrag,
+      onDragOver,
+    } = this.props;
+
+    if (!prevProps.isDragging && isDragging) {
+      onBeginDrag(index);
+    }
+
+    if (!prevProps.isOver && isOver) {
+      onDragOver(index);
+    }
+  }
+
   render() {
     const {
       connectDragSource,
@@ -43,14 +61,6 @@ class Cell extends Component {
       isOver,
       onClick,
     } = this.props;
-
-    if (isDragging) {
-      console.log('dragging', index);
-    }
-
-    if (isOver) {
-      console.log('isOver', index);
-    }
 
     return connectDropTarget(connectDragSource(
       <div

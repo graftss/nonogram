@@ -11,7 +11,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <div>
-          <Grid size={4}/>
+          <Grid />
         </div>
       </div>
     );

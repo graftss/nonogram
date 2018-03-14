@@ -8,31 +8,43 @@ import connect from '../../state/connect';
 import Cell from '../Cell';
 
 const connections = {
-  actions: ['toggleCell'],
-  selectors: ['isCellFilled'],
+  actions: ['beginDrag', 'dragOver', 'endDrag', 'toggleCell'],
+  selectors: ['isCellFilled', 'gridSize'],
 }
 
 class PuzzleGrid extends Component {
   getStyle() {
-    const { size } = this.props;
+    const { gridSize } = this.props;
 
     return {
-      gridTemplateRows: `repeat(${size}, 1fr)`,
-      gridTemplateColumns: `repeat(${size}, 1fr)`,
+      gridTemplateRows: `repeat(${gridSize}, 1fr)`,
+      gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
     };
+  }
+
+  onBeginDrag = index => {
+    this.props.beginDrag(index);
   }
 
   onCellClick = index => {
     this.props.toggleCell(index);
   }
 
+  onCellDragOver = index => {
+    this.props.dragOver(index);
+  }
+
+  onCellEndDrag = index => {
+    this.props.endDrag(index);
+  }
+
   render() {
     const {
       isCellFilled,
-      size,
+      gridSize,
     } = this.props;
 
-    const cells = range(0, size * size);
+    const cells = range(0, gridSize * gridSize);
 
     return (
       <div className="grid" style={this.getStyle()}>
@@ -41,7 +53,10 @@ class PuzzleGrid extends Component {
             filled={isCellFilled(index)}
             index={index}
             key={index}
+            onBeginDrag={this.onBeginDrag}
             onClick={this.onCellClick}
+            onDragOver={this.onCellDragOver}
+            onEndDrag={this.onCellEndDrag}
           />
         ))}
       </div>
