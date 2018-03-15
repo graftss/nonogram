@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Icon } from 'semantic-ui-react';
 
 import CompleteModal from './CompleteModal';
 import ConstraintsV from '../ConstraintsV';
@@ -16,6 +17,8 @@ const connections = {
   ],
   selectors: [
     'activeCellState',
+    'canRedo',
+    'canUndo',
     'constraintsH',
     'constraintsV',
     'gridSize',
@@ -46,6 +49,8 @@ class App extends Component {
     const {
       activeCellState,
       gridSize,
+      canRedo,
+      canUndo,
       constraintsH,
       constraintsV,
       redo,
@@ -68,6 +73,8 @@ class App extends Component {
         <Grid />
         <Palette
           activeCellState={activeCellState}
+          canRedo={canRedo}
+          canUndo={canUndo}
           redo={redo}
           setActiveCellState={setActiveCellState}
           undo={undo}

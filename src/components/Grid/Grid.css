@@ -53,6 +53,7 @@
 
 .palette-container {
   display: inline-block;
+  text-align: right;
   vertical-align: top;
   margin-left: 10vh;
 }
@@ -66,7 +67,6 @@
 }
 
 .palette-hotkey {
-  margin-right: 6px;
   font-size: 1.3em;
 }
 
