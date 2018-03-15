@@ -1,4 +1,13 @@
-import { __, assoc, assocPath, compose, curry, merge, reduce } from 'ramda';
+import {
+  __,
+  assoc,
+  assocPath,
+  compose,
+  curry,
+  merge,
+  reduce,
+  takeLast,
+} from 'ramda';
 
 import { TYPES } from './actions';
 import { CELL_STATES } from '../constants';
@@ -16,6 +25,8 @@ const toggleCellState = (activeCellState, cellState) => {
 
 const initialState = {
   cellStates: {},
+  history: { past: [], future: [] },
+  currentHistoryIndex: -1,
   dragStates: {},
   size: 4,
   dragSource: undefined,
@@ -26,20 +37,26 @@ const initialState = {
   constraintsH: [[1], [1], [1], [1], [1], [1], [1], [1], [1], [1]],
 };
 
-const toggleFill = (index, state) => {
+const toggleFill = curry((index, state) => {
   const currentFill = state.cellStates[index];
   return assocPath(
     ['cellStates', index],
     toggleCellState(state.activeCellState, currentFill),
     state,
   );
-};
+});
 
 const setFill = fill => (state, index) => (
   assocPath(['cellStates', index], fill, state)
 );
 
 const setDragFill = fill => (s, i) => assocPath(['dragStates', i], fill, s);
+
+const addPastHistory = curry((cellStates, state) => {
+  const newPast = takeLast(10, state.history.past.concat(cellStates));
+
+  return assocPath(['history', 'past'], newPast, state);
+});
 
 export default (state = initialState, action) => {
   const { payload, type } = action;
@@ -48,7 +65,10 @@ export default (state = initialState, action) => {
     case TYPES.GRID_TOGGLE_CELL: {
       const { index } = payload;
 
-      return toggleFill(index, state);
+      return compose(
+        addPastHistory(state.cellStates),
+        toggleFill(index),
+      )(state);
     }
 
     case TYPES.GRID_BEGIN_DRAG: {
@@ -79,7 +99,7 @@ export default (state = initialState, action) => {
 
     case TYPES.GRID_END_DRAG: {
       const { index } = payload;
-      const { activeCellState, dragSource, size } = state;
+      const { activeCellState, cellStates, dragSource, size } = state;
 
       const cellState = state.cellStates[dragSource];
       const indices = indicesInRect(size, dragSource, index);
@@ -93,6 +113,7 @@ export default (state = initialState, action) => {
       return compose(
         reduce(reducer, __, indices),
         merge(__, updates),
+        addPastHistory(cellStates),
       )(state);
     }
 
