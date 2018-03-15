@@ -4,6 +4,8 @@ import {
   assocPath,
   compose,
   curry,
+  init,
+  last,
   merge,
   reduce,
   takeLast,
@@ -54,9 +56,46 @@ const setDragFill = fill => (s, i) => assocPath(['dragStates', i], fill, s);
 
 const addPastHistory = curry((cellStates, state) => {
   const newPast = takeLast(10, state.history.past.concat(cellStates));
+  const newHistory = { past: newPast, future: [] };
 
-  return assocPath(['history', 'past'], newPast, state);
+  return assoc('history', newHistory, state);
 });
+
+const undoHistory = state => {
+  const { history, cellStates } = state;
+
+  if (history.past.length === 0) return state;
+
+  const newHistory = {
+    past: init(history.past),
+    future: [cellStates, ...history.future],
+  };
+
+  return merge(state, {
+    history: newHistory,
+    cellStates: last(history.past),
+  });
+};
+
+const redoHistory = state => {
+  const { history, cellStates } = state;
+
+  if (history.future.length === 0) return state;
+
+  const newHistory = {
+    past: [...history.past, cellStates],
+    future: history.future.slice(1),
+  };
+
+  return merge(state, {
+    history: newHistory,
+    cellStates: history.future[0],
+  });
+};
+
+const clearFuture = state => (
+  assocPath(['history', 'future'], [], state)
+);
 
 export default (state = initialState, action) => {
   const { payload, type } = action;
@@ -130,6 +169,14 @@ export default (state = initialState, action) => {
       const { cellState } = payload;
 
       return assoc('activeCellState', cellState, state);
+    }
+
+    case TYPES.GRID_UNDO: {
+      return undoHistory(state);
+    }
+
+    case TYPES.GRID_REDO: {
+      return redoHistory(state);
     }
 
     default: return state;

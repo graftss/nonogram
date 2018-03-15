@@ -10,7 +10,9 @@ import connect from '../../state/connect';
 const connections = {
   actions: [
     'push',
+    'redo',
     'setActiveCellState',
+    'undo',
   ],
   selectors: [
     'activeCellState',
@@ -46,11 +48,15 @@ class App extends Component {
       gridSize,
       constraintsH,
       constraintsV,
+      redo,
       setActiveCellState,
+      undo,
     } = this.props;
 
     return (
       <div className="App">
+        <button onClick={undo}>hi</button>
+        <button onClick={redo}>hi</button>
         <ConstraintsV
           gridSize={gridSize}
           constraintsV={constraintsV}
@@ -62,7 +68,9 @@ class App extends Component {
         <Grid />
         <Palette
           activeCellState={activeCellState}
+          redo={redo}
           setActiveCellState={setActiveCellState}
+          undo={undo}
         />
         <CompleteModal
           onClose={this.onModalClose}

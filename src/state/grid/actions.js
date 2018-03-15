@@ -5,9 +5,11 @@ export const TYPES = keyMirror([
   'GRID_CANCEL_DRAG',
   'GRID_DRAG_OVER',
   'GRID_END_DRAG',
+  'GRID_REDO',
   'GRID_SET_ACTIVE_CELL_STATE',
   'GRID_TOGGLE_CELL',
   'GRID_TOGGLE_RECT',
+  'GRID_UNDO',
 ]);
 
 export const toggleCell = argCreator(TYPES.GRID_TOGGLE_CELL, ['index']);
@@ -29,3 +31,7 @@ export const setActiveCellState = argCreator(
   TYPES.GRID_SET_ACTIVE_CELL_STATE,
   ['cellState']
 );
+
+export const undo = constantCreator(TYPES.GRID_UNDO);
+
+export const redo = constantCreator(TYPES.GRID_REDO);

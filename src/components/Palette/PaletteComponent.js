@@ -13,10 +13,9 @@ export default ({
 }) => (
   <div className="palette-container">
     {palette.map((data, index) => (
-      <div>
+      <div key={data.cellState}>
         <span className="palette-hotkey">{index + 1}</span>
         <div
-          key={data.cellState}
           className={getClassName(activeCellState, data)}
           onClick={() => setActiveCellState(data.cellState)}
         >
