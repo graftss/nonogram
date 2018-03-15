@@ -1,4 +1,4 @@
-import { assocPath } from 'ramda';
+import { __, assoc, assocPath, compose, curry, merge, reduce } from 'ramda';
 
 import { TYPES } from './actions';
 import { CELL_STATES } from '../constants';
@@ -26,7 +26,7 @@ const initialState = {
   constraintsH: [[1], [1], [1], [1], [1], [1], [1], [1], [1], [1]],
 };
 
-const toggleFill = (state, index) => {
+const toggleFill = (index, state) => {
   const currentFill = state.cellStates[index];
   return assocPath(
     ['cellStates', index],
@@ -48,16 +48,13 @@ export default (state = initialState, action) => {
     case TYPES.GRID_TOGGLE_CELL: {
       const { index } = payload;
 
-      return toggleFill(state, index);
+      return toggleFill(index, state);
     }
 
     case TYPES.GRID_BEGIN_DRAG: {
       const { index } = payload;
 
-      return {
-        ...state,
-        dragSource: index,
-      };
+      return assoc('dragSource', index, state);
     }
 
     case TYPES.GRID_DRAG_OVER: {
@@ -66,15 +63,18 @@ export default (state = initialState, action) => {
 
       const cellState = state.cellStates[dragSource];
       const indices = indicesInRect(size, dragSource, index);
-      state.dragStates = {};
-
       const reducer = setDragFill(toggleCellState(activeCellState, cellState));
 
-      return {
-        ...indices.reduce(reducer, state),
+      const updates = {
         dropTarget: index,
         dragging: true,
+        dragStates: {},
       };
+
+      return compose(
+        reduce(reducer, __, indices),
+        merge(__, updates),
+      )(state);
     }
 
     case TYPES.GRID_END_DRAG: {
@@ -83,28 +83,32 @@ export default (state = initialState, action) => {
 
       const cellState = state.cellStates[dragSource];
       const indices = indicesInRect(size, dragSource, index);
-
       const reducer = setFill(toggleCellState(activeCellState, cellState));
 
-      return {
-        ...indices.reduce(reducer, state),
-        dragging: false,
+      const updates = {
         dragStates: {},
+        dragging: false,
       };
+
+      return compose(
+        reduce(reducer, __, indices),
+        merge(__, updates),
+      )(state);
     }
 
     case TYPES.GRID_CANCEL_DRAG: {
-      return {
-        ...state,
+      const updates = {
         dragging: false,
         dragStates: {},
       };
+
+      return merge(state, updates);
     }
 
     case TYPES.GRID_SET_ACTIVE_CELL_STATE: {
       const { cellState } = payload;
 
-      return { ...state, activeCellState: cellState };
+      return assoc('activeCellState', cellState, state);
     }
 
     default: return state;
