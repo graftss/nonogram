@@ -12,7 +12,6 @@ const connections = {
     'beginDrag',
     'cancelDrag',
     'dragOver',
-    'endDrag',
     'toggleCell',
   ],
   selectors: [
@@ -37,8 +36,6 @@ class Grid extends Component {
 
   onCellDragOver = index => this.props.dragOver(index);
 
-  onCellEndDrag = index => this.props.endDrag(index);
-
   onCellCancelDrag = () => this.props.cancelDrag();
 
   render() {
@@ -60,7 +57,6 @@ class Grid extends Component {
             onCancelDrag={this.onCellCancelDrag}
             onClick={this.onCellClick}
             onDragOver={this.onCellDragOver}
-            onEndDrag={this.onCellEndDrag}
           />
         ))}
       </div>

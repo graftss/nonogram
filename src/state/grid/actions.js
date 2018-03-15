@@ -4,7 +4,6 @@ export const TYPES = keyMirror([
   'GRID_BEGIN_DRAG',
   'GRID_CANCEL_DRAG',
   'GRID_DRAG_OVER',
-  'GRID_END_DRAG',
   'GRID_REDO',
   'GRID_SET_ACTIVE_CELL_STATE',
   'GRID_TOGGLE_CELL',
@@ -22,8 +21,6 @@ export const toggleRect = argCreator(
 export const beginDrag = argCreator(TYPES.GRID_BEGIN_DRAG, ['index']);
 
 export const dragOver = argCreator(TYPES.GRID_DRAG_OVER, ['index']);
-
-export const endDrag = argCreator(TYPES.GRID_END_DRAG, ['index']);
 
 export const cancelDrag = constantCreator(TYPES.GRID_CANCEL_DRAG);
 

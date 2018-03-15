@@ -136,12 +136,11 @@ export default (state = initialState, action) => {
       )(state);
     }
 
-    case TYPES.GRID_END_DRAG: {
-      const { index } = payload;
-      const { activeCellState, cellStates, dragSource, size } = state;
+    case TYPES.GRID_CANCEL_DRAG: {
+      const { activeCellState, cellStates, dragSource, dropTarget, size } = state;
 
       const cellState = state.cellStates[dragSource];
-      const indices = indicesInRect(size, dragSource, index);
+      const indices = indicesInRect(size, dragSource, dropTarget);
       const reducer = setFill(toggleCellState(activeCellState, cellState));
 
       const updates = {
@@ -154,15 +153,6 @@ export default (state = initialState, action) => {
         merge(__, updates),
         addPastHistory(cellStates),
       )(state);
-    }
-
-    case TYPES.GRID_CANCEL_DRAG: {
-      const updates = {
-        dragging: false,
-        dragStates: {},
-      };
-
-      return merge(state, updates);
     }
 
     case TYPES.GRID_SET_ACTIVE_CELL_STATE: {
