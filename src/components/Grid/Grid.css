@@ -61,6 +61,13 @@
   width: 5vh;
   height: 5vh;
   border: 1px solid lightgrey;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.palette-hotkey {
+  margin-right: 6px;
+  font-size: 1.3em;
 }
 
 .palette-active {
