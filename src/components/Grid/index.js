@@ -7,7 +7,7 @@ import './Grid.css';
 import connect from '../../state/connect';
 import Cell from '../Cell';
 import BaseGrid from './BaseGrid';
-import { coordsToIndex, rectCoordRanges } from '../../utils';
+import { coordsToIndex, indexToCoords, rectCoordRanges } from '../../utils';
 
 const connections = {
   actions: [
@@ -40,7 +40,7 @@ class Grid extends Component {
   }
 
   // returns an object mapping cell indices to class names
-  getCellClassNames() {
+  getDragAreaClassNames() {
     const {
       gridDragging,
       gridDragSource,
@@ -87,12 +87,12 @@ class Grid extends Component {
 
   onCellCancelDrag = () => this.props.cancelDrag();
 
-  renderCell = cellClassNames => index => {
+  renderCell = dragAreaClassNames => index => {
     const { cellState } = this.props;
 
     return (
       <Cell
-        cellClassName={cellClassNames[index] || ''}
+        cellClassName={dragAreaClassNames[index] || ''}
         cellState={cellState(index)}
         index={index}
         key={index}
@@ -108,10 +108,24 @@ class Grid extends Component {
     const { gridHeight, gridWidth } = this.props;
 
     const cellIndices = range(0, gridHeight * gridWidth);
-    const cellClassNames = this.getCellClassNames();
+    const dragAreaClassNames = this.getDragAreaClassNames();
     const cells = cellIndices
-      .map(this.renderCell(cellClassNames))
-      .map(node => ({ node }));
+      .map(this.renderCell(dragAreaClassNames))
+      .map((node, index) => {
+        const [col, row] = indexToCoords(gridWidth, index);
+        let cellClassName = '';
+
+        if (col % 5 === 4) cellClassName += 'puzzle-cell-boundary-right ';
+        else if (col % 5 === 0) cellClassName += 'puzzle-cell-boundary-left ';
+
+        if (row % 5 === 4) cellClassName += 'puzzle-cell-boundary-bottom ';
+        else if (row % 5 === 0) cellClassName += 'puzzle-cell-boundary-top ';
+
+        return {
+          node,
+          cellProps: { className: cellClassName },
+        };
+      });
 
     return splitEvery(gridWidth, cells);
   }

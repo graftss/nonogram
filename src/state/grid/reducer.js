@@ -56,7 +56,7 @@ const setFill = fill => (state, index) => (
 const setDragFill = fill => (s, i) => assocPath(['dragStates', i], fill, s);
 
 const addPastHistory = curry((cellStates, state) => {
-  const newPast = takeLast(10, state.history.past.concat(cellStates));
+  const newPast = takeLast(30, state.history.past.concat(cellStates));
   const newHistory = { past: newPast, future: [] };
 
   return assoc('history', newHistory, state);

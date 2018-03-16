@@ -42,6 +42,23 @@
   cursor: pointer;
 }
 
+.puzzle-cell-boundary-left {
+  border-left: 1px solid cornflowerblue;
+}
+
+.puzzle-cell-boundary-right {
+  border-right: 1px solid cornflowerblue;
+}
+
+.puzzle-cell-boundary-top {
+  border-top: 1px solid cornflowerblue;
+}
+
+.puzzle-cell-boundary-bottom {
+  border-bottom: 1px solid cornflowerblue;
+}
+
+
 .palette-container {
   display: inline-block;
   text-align: right;
