@@ -30,13 +30,14 @@ const initialState = {
   history: { past: [], future: [] },
   currentHistoryIndex: -1,
   dragStates: {},
-  size: 10,
+  width: 6,
+  height: 5,
   dragSource: undefined,
   dropTarget: undefined,
   activeCellState: CELL_STATES.FILLED,
   dragging: false,
   constraintsV: [[2], [], [1], [1], [1], [1], [1], [1], [1], [1]],
-  constraintsH: [[1], [1], [1], [1], [1], [1], [1], [1], [1], [1]],
+  constraintsH: [[1], [1], [1], [1, 1], [1], [1], [1], [1], [1], [1]],
 };
 
 const toggleFill = curry((index, state) => {
@@ -118,10 +119,10 @@ export default (state = initialState, action) => {
 
     case TYPES.GRID_DRAG_OVER: {
       const { index } = payload;
-      const { activeCellState, dragSource, size } = state;
+      const { activeCellState, dragSource, width } = state;
 
       const cellState = state.cellStates[dragSource];
-      const indices = indicesInRect(size, dragSource, index);
+      const indices = indicesInRect(width, dragSource, index);
       const reducer = setDragFill(toggleCellState(activeCellState, cellState));
 
       const updates = {
@@ -137,10 +138,10 @@ export default (state = initialState, action) => {
     }
 
     case TYPES.GRID_CANCEL_DRAG: {
-      const { activeCellState, cellStates, dragSource, dropTarget, size } = state;
+      const { activeCellState, cellStates, dragSource, dropTarget, width } = state;
 
       const cellState = state.cellStates[dragSource];
-      const indices = indicesInRect(size, dragSource, dropTarget);
+      const indices = indicesInRect(width, dragSource, dropTarget);
       const reducer = setFill(toggleCellState(activeCellState, cellState));
 
       const updates = {

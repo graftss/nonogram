@@ -16,11 +16,11 @@ export const indexToCoords = (size, index) => [
   Math.floor(index / size),
 ];
 
-export const coordsToIndex = (size, coords) => coords[0] + coords[1] * size;
+export const coordsToIndex = (width, coords) => coords[0] + coords[1] * width;
 
-export const rectCoordRanges = (size, source, target) => {
-  const sourceCoords = indexToCoords(size, source);
-  const targetCoords = indexToCoords(size, target);
+export const rectCoordRanges = (width, source, target) => {
+  const sourceCoords = indexToCoords(width, source);
+  const targetCoords = indexToCoords(width, target);
 
   const xRange = [
     Math.min(sourceCoords[0], targetCoords[0]),
@@ -35,13 +35,13 @@ export const rectCoordRanges = (size, source, target) => {
   return { xRange, yRange };
 }
 
-export const indicesInRect = (size, source, target) => {
-  const { xRange, yRange } = rectCoordRanges(size, source, target);
+export const indicesInRect = (width, source, target) => {
+  const { xRange, yRange } = rectCoordRanges(width, source, target);
   const result = [];
 
   for (let x = xRange[0]; x <= xRange[1]; x++) {
     for (let y = yRange[0]; y <= yRange[1]; y++) {
-      result.push(coordsToIndex(size, [x, y]));
+      result.push(coordsToIndex(width, [x, y]));
     }
   }
 

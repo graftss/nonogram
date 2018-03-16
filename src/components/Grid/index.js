@@ -20,17 +20,18 @@ const connections = {
     'gridDragging',
     'gridDragSource',
     'gridDropTarget',
-    'gridSize',
+    'gridHeight',
+    'gridWidth',
   ],
 }
 
 class Grid extends Component {
   getStyle() {
-    const { gridSize } = this.props;
+    const { gridHeight, gridWidth } = this.props;
 
     return {
-      gridTemplateRows: `repeat(${gridSize}, 1fr)`,
-      gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
+      gridTemplateRows: `repeat(${gridHeight}, 1fr)`,
+      gridTemplateColumns: `repeat(${gridWidth}, 1fr)`,
     };
   }
 
@@ -40,34 +41,35 @@ class Grid extends Component {
       gridDragging,
       gridDragSource,
       gridDropTarget,
-      gridSize,
+      gridHeight,
+      gridWidth
     } = this.props;
     const result = {};
 
     if (!gridDragging) return result;
 
-    for (let i = 0; i < gridSize * gridSize; i++) {
+    for (let i = 0; i < gridHeight * gridWidth; i++) {
       result[i] = '';
     }
 
     const {
       xRange: [xMin, xMax],
       yRange: [yMin, yMax],
-    } = rectCoordRanges(gridSize, gridDragSource, gridDropTarget);
+    } = rectCoordRanges(gridWidth, gridDragSource, gridDropTarget);
 
-    result[coordsToIndex(gridSize, [xMin, yMin])] += 'cell-drag-top-left ';
-    result[coordsToIndex(gridSize, [xMin, yMax])] += 'cell-drag-bottom-left ';
-    result[coordsToIndex(gridSize, [xMax, yMin])] += 'cell-drag-top-right ';
-    result[coordsToIndex(gridSize, [xMax, yMax])] += 'cell-drag-bottom-right ';
+    result[coordsToIndex(gridWidth, [xMin, yMin])] += 'cell-drag-top-left ';
+    result[coordsToIndex(gridWidth, [xMin, yMax])] += 'cell-drag-bottom-left ';
+    result[coordsToIndex(gridWidth, [xMax, yMin])] += 'cell-drag-top-right ';
+    result[coordsToIndex(gridWidth, [xMax, yMax])] += 'cell-drag-bottom-right ';
 
     for (let x = xMin + 1; x < xMax; x++) {
-      result[coordsToIndex(gridSize, [x, yMin])] += 'cell-drag-top ';
-      result[coordsToIndex(gridSize, [x, yMax])] += 'cell-drag-bottom ';
+      result[coordsToIndex(gridWidth, [x, yMin])] += 'cell-drag-top ';
+      result[coordsToIndex(gridWidth, [x, yMax])] += 'cell-drag-bottom ';
     }
 
     for (let y = yMin + 1; y < yMax; y++) {
-      result[coordsToIndex(gridSize, [xMin, y])] += 'cell-drag-left ';
-      result[coordsToIndex(gridSize, [xMax, y])] += 'cell-drag-right ';
+      result[coordsToIndex(gridWidth, [xMin, y])] += 'cell-drag-left ';
+      result[coordsToIndex(gridWidth, [xMax, y])] += 'cell-drag-right ';
     }
 
     return result;
@@ -84,13 +86,12 @@ class Grid extends Component {
   render() {
     const {
       cellState,
-      gridSize,
+      gridHeight,
+      gridWidth,
     } = this.props;
 
-    const cellIndices = range(0, gridSize * gridSize);
+    const cellIndices = range(0, gridHeight * gridWidth);
     const cellClassNames = this.getCellClassNames();
-
-    console.log('cellclass names', cellClassNames);
 
     return (
       <div className="grid" style={this.getStyle()}>

@@ -21,7 +21,8 @@ const connections = {
     'canUndo',
     'constraintsH',
     'constraintsV',
-    'gridSize',
+    'gridHeight',
+    'gridWidth',
     'isValid',
   ],
 };
@@ -48,11 +49,12 @@ class App extends Component {
   render() {
     const {
       activeCellState,
-      gridSize,
       canRedo,
       canUndo,
       constraintsH,
       constraintsV,
+      gridHeight,
+      gridWidth,
       redo,
       setActiveCellState,
       undo,
@@ -60,14 +62,12 @@ class App extends Component {
 
     return (
       <div className="App">
-        <button onClick={undo}>hi</button>
-        <button onClick={redo}>hi</button>
         <ConstraintsV
-          gridSize={gridSize}
+          gridSize={gridWidth}
           constraintsV={constraintsV}
         />
         <ConstraintsH
-          gridSize={gridSize}
+          gridSize={gridHeight}
           constraintsH={constraintsH}
         />
         <Grid />

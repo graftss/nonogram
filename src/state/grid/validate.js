@@ -2,12 +2,12 @@ import { curry, equals, props, range } from 'ramda';
 
 import { CELL_STATES } from '../constants';
 
-const row = curry((size, cellStates, index) => (
-  props(range(0, size).map(i => i + size * index), cellStates)
+const row = curry((width, cellStates, index) => (
+  props(range(0, width).map(i => i + width * index), cellStates)
 ));
 
-const column = curry((size, cellStates, index) => (
-  props(range(0, size).map(i => i * size + index), cellStates)
+const column = curry((width, height, cellStates, index) => (
+  props(range(0, height).map(i => i * width + index), cellStates)
 ));
 
 const isFilled = state => (
@@ -37,20 +37,24 @@ export const validateSegment = (cellStates, constraint) => {
 };
 
 export default ({
-  size,
   cellStates,
   constraintsH,
   constraintsV,
+  height,
+  width,
 }) => {
-  const getRow = row(size, cellStates);
-  const getColumn = column(size, cellStates);
+  const getRow = row(width, cellStates);
+  const getColumn = column(width, height, cellStates);
 
   const checkRow = index => validateSegment(getRow(index), constraintsH[index]);
   const checkColumn = index => validateSegment(getColumn(index), constraintsV[index]);
 
-  for (let i = 0; i < size; i++) {
-    if (!checkRow(i)) return false;
+  for (let i = 0; i < width; i++) {
     if (!checkColumn(i)) return false;
+  }
+
+  for (let i = 0; i < height; i++) {
+    if (!checkRow(i)) return false;
   }
 
   return true;

@@ -9,7 +9,9 @@ export const cellState = curry(
   }
 );
 
-export const gridSize = prop('size');
+export const gridWidth = prop('width');
+
+export const gridHeight = prop('height');
 
 export const constraintsV = prop('constraintsV');
 
