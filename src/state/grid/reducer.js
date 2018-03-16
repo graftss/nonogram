@@ -7,6 +7,7 @@ import {
   init,
   last,
   merge,
+  path,
   reduce,
   takeLast,
 } from 'ramda';
@@ -28,7 +29,7 @@ const toggleCellState = (activeCellState, cellState) => {
 const initialState = {
   cellStates: {},
   history: { past: [], future: [] },
-  currentHistoryIndex: -1,
+  savedStates: {},
   dragStates: {},
   width: 10,
   height: 5,
@@ -164,6 +165,23 @@ export default (state = initialState, action) => {
 
     case TYPES.GRID_REDO: {
       return redoHistory(state);
+    }
+
+    case TYPES.GRID_SAVE_STATE: {
+      const { index } = payload;
+      const { cellStates } = state;
+
+      return assocPath(['savedStates', index], cellStates, state);
+    }
+
+    case TYPES.GRID_LOAD_STATE: {
+      const { index } = payload;
+      const { dragging } = state;
+      const cellStates = path(['savedStates', index], state);
+
+      if (dragging) return state;
+
+      return assoc('cellStates', cellStates, state);
     }
 
     default: return state;

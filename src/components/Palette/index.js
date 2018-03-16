@@ -19,12 +19,19 @@ export default class Palette extends Component {
 
   onKeydown = e => {
     const { keyCode, shiftKey } = e;
-    const { redo, setActiveCellState, undo } = this.props;
+    const {
+      loadState,
+      redo,
+      saveState,
+      setActiveCellState,
+      undo,
+    } = this.props;
 
-    const lowerBound = 49;
+    const lowerBound = 49; // the 1 key
     const upperBound = lowerBound + palette.length - 1;
 
     if (keyCode >= lowerBound && keyCode <= upperBound) {
+      // digit corresponding to palette colors
       const index = keyCode - lowerBound;
       setActiveCellState(palette[index].cellState);
     } else if (keyCode === 81 && shiftKey) {
@@ -33,6 +40,12 @@ export default class Palette extends Component {
     } else if (keyCode === 81) {
       // q
       undo();
+    } else if (shiftKey && keyCode === 83) {
+      // shift + s
+      saveState(1);
+    } else if (shiftKey && keyCode === 76) {
+      // shift + l
+      loadState(1);
     }
   }
 

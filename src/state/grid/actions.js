@@ -4,7 +4,9 @@ export const TYPES = keyMirror([
   'GRID_BEGIN_DRAG',
   'GRID_CANCEL_DRAG',
   'GRID_DRAG_OVER',
+  'GRID_LOAD_STATE',
   'GRID_REDO',
+  'GRID_SAVE_STATE',
   'GRID_SET_ACTIVE_CELL_STATE',
   'GRID_TOGGLE_CELL',
   'GRID_TOGGLE_RECT',
@@ -32,3 +34,7 @@ export const setActiveCellState = argCreator(
 export const undo = constantCreator(TYPES.GRID_UNDO);
 
 export const redo = constantCreator(TYPES.GRID_REDO);
+
+export const saveState = argCreator(TYPES.GRID_SAVE_STATE, ['index']);
+
+export const loadState = argCreator(TYPES.GRID_LOAD_STATE, ['index']);

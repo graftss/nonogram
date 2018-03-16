@@ -8,8 +8,10 @@ import connect from '../../state/connect';
 
 const connections = {
   actions: [
+    'loadState',
     'push',
     'redo',
+    'saveState',
     'setActiveCellState',
     'undo',
   ],
@@ -49,7 +51,9 @@ class App extends Component {
       activeCellState,
       canRedo,
       canUndo,
+      loadState,
       redo,
+      saveState,
       setActiveCellState,
       undo,
     } = this.props;
@@ -62,7 +66,9 @@ class App extends Component {
             activeCellState={activeCellState}
             canRedo={canRedo}
             canUndo={canUndo}
+            loadState={loadState}
             redo={redo}
+            saveState={saveState}
             setActiveCellState={setActiveCellState}
             undo={undo}
           />
