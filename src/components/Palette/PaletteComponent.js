@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
 
+import Timer from './Timer';
+
 const getClassName = (activeCellState, data) => [
   'palette',
   data.className,
@@ -20,6 +22,7 @@ export default ({
   undo,
 }) => (
   <div className="palette-container">
+    <div className="timer-container"><Timer /></div>
     {palette.map((data, index) => (
       <div key={data.cellState}>
         <span className="palette-hotkey">{index + 1} </span>
