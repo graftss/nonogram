@@ -11,6 +11,7 @@ export default ({
   activeCellState,
   canRedo,
   canUndo,
+  colors,
   palette,
   redo,
   setActiveCellState,
@@ -21,6 +22,7 @@ export default ({
       <div key={data.cellState}>
         <span className="palette-hotkey">{index + 1} </span>
         <div
+          style={{ backgroundColor: data.color }}
           className={getClassName(activeCellState, data)}
           onClick={() => setActiveCellState(data.cellState)}
         >

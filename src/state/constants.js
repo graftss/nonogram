@@ -1,5 +1,6 @@
 export const CELL_STATES = {
-  EMPTY: 0,
+  EMPTY: -2,
+  UNFILLED: 0,
   FILLED: 1,
-  UNFILLED: 2,
+  PINK: 2,
 };

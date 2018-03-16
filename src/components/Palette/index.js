@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { keys } from 'ramda';
 
 import PaletteComponent from './PaletteComponent';
 import { CELL_STATES } from '../../state/constants';
 
-const palette = [
-  { className: 'palette-filled', cellState: CELL_STATES.FILLED },
+const basePalette = [
   { className: 'palette-unfilled', cellState: CELL_STATES.UNFILLED },
 ];
 
@@ -20,6 +20,7 @@ export default class Palette extends Component {
   onKeydown = e => {
     const { keyCode, shiftKey } = e;
     const {
+      colors,
       loadState,
       redo,
       saveState,
@@ -28,12 +29,12 @@ export default class Palette extends Component {
     } = this.props;
 
     const lowerBound = 49; // the 1 key
-    const upperBound = lowerBound + palette.length - 1;
+    const upperBound = lowerBound + keys(colors).length;
 
     if (keyCode >= lowerBound && keyCode <= upperBound) {
       // digit corresponding to palette colors
       const index = keyCode - lowerBound;
-      setActiveCellState(palette[index].cellState);
+      setActiveCellState(index);
     } else if (keyCode === 81 && shiftKey) {
       // shift + q
       redo();
@@ -49,7 +50,18 @@ export default class Palette extends Component {
     }
   }
 
+  getPalette() {
+    const { colors } = this.props;
+
+    const colorPalette = keys(colors).map(cellState => ({
+      color: colors[cellState],
+      cellState: Number(cellState),
+    }));
+
+    return basePalette.concat(colorPalette);
+  }
+
   render() {
-    return <PaletteComponent palette={palette} {...this.props} />;
+    return <PaletteComponent palette={this.getPalette()} {...this.props} />;
   }
 }

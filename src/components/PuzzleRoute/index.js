@@ -21,6 +21,7 @@ const connections = {
     'canUndo',
     'constraintsH',
     'constraintsV',
+    'gridColors',
     'gridHeight',
     'gridWidth',
     'isValid',
@@ -51,6 +52,7 @@ class App extends Component {
       activeCellState,
       canRedo,
       canUndo,
+      gridColors,
       loadState,
       redo,
       saveState,
@@ -66,6 +68,7 @@ class App extends Component {
             activeCellState={activeCellState}
             canRedo={canRedo}
             canUndo={canUndo}
+            colors={gridColors}
             loadState={loadState}
             redo={redo}
             saveState={saveState}

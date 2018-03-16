@@ -1,7 +1,9 @@
-import { curry, prop } from 'ramda';
+import { curry, prop, zip, zipWith } from 'ramda';
 
 import validate from './validate';
 import { longestEltLength, pad, rotateMatrix } from '../../utils';
+
+export const cellStates = prop('cellStates');
 
 export const cellState = curry(
   (state, index) => {
@@ -14,13 +16,21 @@ export const gridWidth = prop('width');
 
 export const gridHeight = prop('height');
 
-export const constraintsH = prop('constraintsH');
+export const gridColors = prop('colors');
 
-export const constraintsV = prop('constraintsV');
+export const gridColor = curry((state, id) => gridColors(state)[id]);
 
-export const constraintWidth = state => longestEltLength(constraintsH(state));
+export const cellColor = curry(
+  (state, index) => gridColors(state)[cellState(state, index)]
+);
 
-export const constraintHeight = state => longestEltLength(constraintsV(state));
+export const constraintsH = state => ({ blocks: state.blocksH, colors: state.colorsH });
+
+export const constraintsV = state => ({ blocks: state.blocksV, colors: state.colorsV });
+
+export const constraintWidth = state => longestEltLength(constraintsH(state).blocks);
+
+export const constraintHeight = state => longestEltLength(constraintsV(state).blocks);
 
 export const fullWidth = state => gridWidth(state) + constraintWidth(state);
 
@@ -29,9 +39,13 @@ export const fullHeight = state => gridHeight(state) + constraintHeight(state);
 const padLeftMap = (length, array) => array.map(row => pad(length, null, true, row));
 
 export const normalizedConstraints = state => {
-  const normalizedH = padLeftMap(constraintWidth(state), constraintsH(state));
+  const ch = constraintsH(state);
+  const zippedH = zipWith(zip, ch.blocks, ch.colors);
+  const normalizedH = padLeftMap(constraintWidth(state), zippedH);
 
-  const paddedV = padLeftMap(constraintHeight(state), constraintsV(state));
+  const cv = constraintsV(state);
+  const zippedV = zipWith(zip, cv.blocks, cv.colors);
+  const paddedV = padLeftMap(constraintHeight(state), zippedV);
   const orientedV = rotateMatrix(paddedV);
   const normalizedV = padLeftMap(fullWidth(state), orientedV);
 

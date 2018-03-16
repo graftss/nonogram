@@ -18,11 +18,10 @@ import { indicesInRect } from '../../utils';
 
 const toggleCellState = (activeCellState, cellState) => {
   switch (cellState) {
-    case CELL_STATES.FILLED:
-    case CELL_STATES.UNFILLED: return CELL_STATES.EMPTY;
+    case undefined:
+    case CELL_STATES.EMPTY: return activeCellState;
 
-    case CELL_STATES.EMPTY:
-    default: return activeCellState;
+    default: return CELL_STATES.EMPTY;
   }
 };
 
@@ -31,14 +30,19 @@ const initialState = {
   history: { past: [], future: [] },
   savedStates: {},
   dragStates: {},
-  width: 10,
-  height: 5,
   dragSource: undefined,
   dropTarget: undefined,
-  activeCellState: CELL_STATES.FILLED,
+  activeCellState: CELL_STATES.UNFILLED,
   dragging: false,
-  constraintsV: [[2], [], [1], [1], [1], [1], [1], [1], [1, 3, 5], [1]],
-  constraintsH: [[1], [1], [1], [1, 1], [1, 4]],
+
+  // data comprising a puzzle
+  width: 10,
+  height: 5,
+  colors: { 1: 'black', 2: 'pink', 3: 'orange' },
+  blocksV: [[2], [], [1], [1], [1], [1], [1], [1], [1], [1]],
+  colorsV: [[2], [], [1], [3], [1], [3], [1], [1], [1], [1]],
+  blocksH: [[1], [1], [1], [1, 1], [1, 4]],
+  colorsH: [[2], [2], [1], [3, 3], [1, 1]],
 };
 
 const toggleFill = curry((index, state) => {

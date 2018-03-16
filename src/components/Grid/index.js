@@ -17,10 +17,12 @@ const connections = {
     'toggleCell',
   ],
   selectors: [
+    'cellColor',
     'cellState',
     'fullHeight',
     'fullWidth',
     'normalizedConstraints',
+    'gridColor',
     'gridDragging',
     'gridDragSource',
     'gridDropTarget',
@@ -88,12 +90,14 @@ class Grid extends Component {
   onCellCancelDrag = () => this.props.cancelDrag();
 
   renderCell = dragAreaClassNames => index => {
-    const { cellState } = this.props;
+    const { cellState, cellColor } = this.props;
+    const color = cellColor(index);
 
     return (
       <Cell
         cellClassName={dragAreaClassNames[index] || ''}
         cellState={cellState(index)}
+        color={color}
         index={index}
         key={index}
         onBeginDrag={this.onBeginDrag}
@@ -131,13 +135,19 @@ class Grid extends Component {
   }
 
   renderGridData() {
-    const { normalizedConstraints: { h, v } } = this.props;
+    const { gridColor, normalizedConstraints: { h, v } } = this.props;
 
     const cellGrid = this.renderCellGrid();
 
     const renderConstraints = row => row.map(c => ({
-      node: c ? <span className="constraint noselect">{c}</span> : null,
-      cellProps: { className: c ? 'constraint-cell' : 'constraint-cell-empty' },
+      node: c ? <span className="constraint noselect">{c[0]}</span> : null,
+      cellProps: {
+        className: c ? 'constraint-cell' : 'constraint-cell-empty',
+
+        // the font color is set as the same as the background color here, then
+        // inverted via css
+        style: c && { backgroundColor: gridColor(c[1]), color: gridColor(c[1]) },
+      },
     }));
 
     const constraintsH = h.map(renderConstraints);

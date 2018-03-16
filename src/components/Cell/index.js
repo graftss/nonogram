@@ -26,10 +26,6 @@ const cellTarget = {
   canDrop(props) {
     return true;
   },
-
-  drop(props, monitor) {
-    // props.onEndDrag(props.index);
-  },
 };
 
 const dropCollect = (connect, monitor) => {
@@ -81,6 +77,7 @@ class Cell extends Component {
   render() {
     const {
       cellClassName,
+      color,
       connectDragSource,
       connectDropTarget,
       index,
@@ -91,6 +88,7 @@ class Cell extends Component {
       <div
         className={`cell ${cellClassName}`}
         onClick={() => onClick(index)}
+        style={{ backgroundColor: color }}
       >
         <div className={this.innerCellClass()}>
         </div>

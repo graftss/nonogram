@@ -34,12 +34,13 @@
 }
 
 .constraint-cell-empty {
-  background-color: #333;
+  background-color: #bbb;
 }
 
 .constraint {
   width: 100%;
   cursor: pointer;
+  filter: invert(100%);
 }
 
 .puzzle-cell-boundary-left {
