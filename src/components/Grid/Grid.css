@@ -5,6 +5,7 @@
   grid-gap: 1px;
   align-items: stretch;
   border: 2px solid black;
+  background-color: #f6f6f6;
 }
 
 .filled {
@@ -44,26 +45,12 @@
   filter: invert(100%);
 }
 
-.puzzle-cell-boundary-left {
-  border-left: 1px solid cornflowerblue;
-}
-
-.puzzle-cell-boundary-right {
-  border-right: 1px solid cornflowerblue;
-}
-
-.puzzle-cell-boundary-top {
-  border-top: 1px solid cornflowerblue;
-}
-
-.puzzle-cell-boundary-bottom {
-  border-bottom: 1px solid cornflowerblue;
-}
-
 .palette-container {
   display: inline-block;
   vertical-align: top;
   margin-left: 10vh;
+  border: 1px solid black;
+  background-color: #f6f6f6;
 }
 
 .palette {
@@ -103,8 +90,10 @@
 }
 
 .timer-container {
+  border-bottom: 1px solid black;
+  height: 30px;
+  vertical-align: middle;
   margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .timer {
@@ -112,41 +101,58 @@
 }
 
 :root {
-  --drag-cell-color: 2px solid red;
+  --drag-cell-border: 2px solid red;
+  --guideline-cell-border: 1px solid cornflowerblue;
+}
+
+.puzzle-cell-boundary-left {
+  border-left: var(--guideline-cell-border);
+}
+
+.puzzle-cell-boundary-right {
+  border-right: var(--guideline-cell-border);
+}
+
+.puzzle-cell-boundary-top {
+  border-top: var(--guideline-cell-border);
+}
+
+.puzzle-cell-boundary-bottom {
+  border-bottom: var(--guideline-cell-border);
 }
 
 .cell-drag-top-left {
-  border-top: var(--drag-cell-color);
-  border-left: var(--drag-cell-color);
+  border-top: var(--drag-cell-border);
+  border-left: var(--drag-cell-border);
 }
 
 .cell-drag-bottom-left {
-  border-left: var(--drag-cell-color);
-  border-bottom: var(--drag-cell-color);
+  border-left: var(--drag-cell-border);
+  border-bottom: var(--drag-cell-border);
 }
 
 .cell-drag-top-right {
-  border-top: var(--drag-cell-color);
-  border-right: var(--drag-cell-color);
+  border-top: var(--drag-cell-border);
+  border-right: var(--drag-cell-border);
 }
 
 .cell-drag-bottom-right {
-  border-right: var(--drag-cell-color);
-  border-bottom: var(--drag-cell-color);
+  border-right: var(--drag-cell-border);
+  border-bottom: var(--drag-cell-border);
 }
 
 .cell-drag-bottom {
-  border-bottom: var(--drag-cell-color);
+  border-bottom: var(--drag-cell-border);
 }
 
 .cell-drag-top {
-  border-top: var(--drag-cell-color);
+  border-top: var(--drag-cell-border);
 }
 
 .cell-drag-left {
-  border-left: var(--drag-cell-color);
+  border-left: var(--drag-cell-border);
 }
 
 .cell-drag-right {
-  border-right: var(--drag-cell-color);
+  border-right: var(--drag-cell-border);
 }

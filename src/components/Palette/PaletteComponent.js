@@ -9,6 +9,16 @@ const getClassName = (activeCellState, data) => [
   activeCellState === data.cellState ? 'palette-active' : '',
 ].join(' ');
 
+const PaletteButton = ({ ...props }) => (
+  <Button
+    className="palette-button"
+    color="black"
+    fluid
+    size="mini"
+    {...props}
+  />
+);
+
 export default ({
   activeCellState,
   canRedo,
@@ -22,7 +32,9 @@ export default ({
   undo,
 }) => (
   <div className="palette-container">
-    <div className="timer-container"><Timer /></div>
+    <div className="timer-container">
+      <Timer />
+    </div>
     {palette.map((data, index) => (
       <div key={data.cellState}>
         <span className="palette-hotkey">{index + 1} </span>
@@ -35,35 +47,23 @@ export default ({
       </div>
     ))}
     <div style={{ marginTop: '20px' }}>
-      <Button
-        className="palette-button"
+      <PaletteButton
         content="undo (Q)"
         disabled={!canUndo}
-        fluid
         onClick={undo}
-        size="mini"
       />
-      <Button
-        className="palette-button"
+      <PaletteButton
         content="redo (⇧Q)"
         disabled={!canRedo}
-        fluid
         onClick={redo}
-        size="mini"
       />
-      <Button
-        className="palette-button"
+      <PaletteButton
         content="save state (⇧S)"
-        fluid
         onClick={saveState}
-        size="mini"
       />
-      <Button
-        className="palette-button"
+      <PaletteButton
         content="load state (⇧L)"
-        fluid
         onClick={loadState}
-        size="mini"
       />
     </div>
   </div>

@@ -5,8 +5,8 @@ export default class BaseGrid extends Component {
     const { height, width } = this.props;
 
     return {
-      gridTemplateRows: `repeat(${height}, 30px)`,
-      gridTemplateColumns: `repeat(${width}, 30px)`,
+      gridTemplateRows: `repeat(${height}, 25px)`,
+      gridTemplateColumns: `repeat(${width}, 25px)`,
     };
   }
 
