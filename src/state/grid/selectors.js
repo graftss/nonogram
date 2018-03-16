@@ -26,18 +26,14 @@ export const fullWidth = state => gridWidth(state) + constraintWidth(state);
 
 export const fullHeight = state => gridHeight(state) + constraintHeight(state);
 
+const padLeftMap = (length, array) => array.map(row => pad(length, null, true, row));
+
 export const normalizedConstraints = state => {
-  const width = constraintWidth(state);
-  const ch = constraintsH(state);
-  const normalizedH = ch.map(row => pad(width, null, true, row));
+  const normalizedH = padLeftMap(constraintWidth(state), constraintsH(state));
 
-  const height = constraintHeight(state);
-  const cv = constraintsV(state);
-  const paddedV = cv.map(row => pad(height, null, true, row));
+  const paddedV = padLeftMap(constraintHeight(state), constraintsV(state));
   const orientedV = rotateMatrix(paddedV);
-
-  const normalizedVWidth = fullWidth(state);
-  const normalizedV = orientedV.map(row => pad(normalizedVWidth, null, true, row));
+  const normalizedV = padLeftMap(fullWidth(state), orientedV);
 
   return { h: normalizedH, v: normalizedV };
 };

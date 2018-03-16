@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class Grid extends Component {
+export default class BaseGrid extends Component {
   getStyle() {
     const { height, width } = this.props;
 
