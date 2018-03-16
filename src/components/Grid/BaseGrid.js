@@ -16,7 +16,19 @@ export default class BaseGrid extends Component {
 
     for (let i = 0; i < height; i++) {
       for (let j = 0; j < width; j++) {
-        result.push(<div key={`${i},${j}`}>{data[i][j]}</div>);
+        if (data[i][j] === null) {
+          result.push(<div key={`${i},${j}`}></div>);
+        } else {
+          const { node, cellProps } = data[i][j];
+
+          const cell = (
+            <div key={`${i},${j}`} {...cellProps}>
+              {node}
+            </div>
+          );
+
+          result.push(cell);
+        }
       }
     }
 

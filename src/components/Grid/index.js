@@ -104,18 +104,27 @@ class Grid extends Component {
     );
   }
 
-  renderGridData() {
-    const { gridHeight, gridWidth, normalizedConstraints } = this.props;
-    const { h, v } = normalizedConstraints;
+  renderCellGrid() {
+    const { gridHeight, gridWidth } = this.props;
 
     const cellIndices = range(0, gridHeight * gridWidth);
     const cellClassNames = this.getCellClassNames();
-    const cells = cellIndices.map(this.renderCell(cellClassNames));
-    const cellGrid = splitEvery(gridWidth, cells);
+    const cells = cellIndices
+      .map(this.renderCell(cellClassNames))
+      .map(node => ({ node }));
 
-    const renderConstraints = row => row.map(c => (
-      c === null ? null : <div className="constraint">{c}</div>
-    ));
+    return splitEvery(gridWidth, cells);
+  }
+
+  renderGridData() {
+    const { normalizedConstraints: { h, v } } = this.props;
+
+    const cellGrid = this.renderCellGrid();
+
+    const renderConstraints = row => row.map(c => ({
+      node: c ? <span className="constraint noselect">{c}</span> : null,
+      cellProps: { className: c ? 'constraint-cell' : 'constraint-cell-empty' },
+    }));
 
     const constraintsH = h.map(renderConstraints);
     const constraintsV = v.map(renderConstraints);

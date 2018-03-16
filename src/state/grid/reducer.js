@@ -36,7 +36,7 @@ const initialState = {
   dropTarget: undefined,
   activeCellState: CELL_STATES.FILLED,
   dragging: false,
-  constraintsV: [[2], [], [1], [1], [1], [1], [1], [1], [1], [1]],
+  constraintsV: [[2], [], [1], [1], [1], [1], [1], [1], [1, 3, 5], [1]],
   constraintsH: [[1], [1], [1], [1, 1], [1, 4]],
 };
 
