@@ -66,6 +66,14 @@
   vertical-align: middle;
 }
 
+.palette:hover {
+  cursor: pointer;
+}
+
+.palette-action:hover {
+  cursor: pointer;
+}
+
 .palette-hotkey {
   font-size: 1.3em;
 }

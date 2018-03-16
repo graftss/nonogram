@@ -28,7 +28,7 @@ const cellTarget = {
   },
 
   drop(props, monitor) {
-    props.onEndDrag(props.index);
+    // props.onEndDrag(props.index);
   },
 };
 

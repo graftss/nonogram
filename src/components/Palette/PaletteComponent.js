@@ -29,23 +29,23 @@ export default ({
     ))}
     <div style={{ marginTop: '20px' }}>
       <div>
-        <span className="palette-hotkey">
-          <Icon
-            disabled={!canRedo}
-            fitted
-            onClick={redo}
-            name="arrow right"
-            size="large"
-          />
-        </span>
-      </div>
-      <div>
-        <span className="palette-hotkey">
+        <span className="palette-action">
           <Icon
             disabled={!canUndo}
             fitted
             onClick={undo}
             name="arrow left"
+            size="large"
+          />
+        </span>
+      </div>
+      <div>
+        <span className="palette-action">
+          <Icon
+            disabled={!canRedo}
+            fitted
+            onClick={redo}
+            name="arrow right"
             size="large"
           />
         </span>
