@@ -30,14 +30,14 @@ const initialState = {
   history: { past: [], future: [] },
   currentHistoryIndex: -1,
   dragStates: {},
-  width: 6,
+  width: 10,
   height: 5,
   dragSource: undefined,
   dropTarget: undefined,
   activeCellState: CELL_STATES.FILLED,
   dragging: false,
   constraintsV: [[2], [], [1], [1], [1], [1], [1], [1], [1], [1]],
-  constraintsH: [[1], [1], [1], [1, 1], [1], [1], [1], [1], [1], [1]],
+  constraintsH: [[1], [1], [1], [1, 1], [1, 4]],
 };
 
 const toggleFill = curry((index, state) => {

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { compose, range } from 'ramda';
+import { compose, range, splitEvery, zipWith } from 'ramda';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import './Grid.css';
 import connect from '../../state/connect';
 import Cell from '../Cell';
+import BaseGrid from './Grid';
 import { coordsToIndex, rectCoordRanges } from '../../utils';
 
 const connections = {
@@ -17,6 +18,9 @@ const connections = {
   ],
   selectors: [
     'cellState',
+    'fullHeight',
+    'fullWidth',
+    'normalizedConstraints',
     'gridDragging',
     'gridDragSource',
     'gridDropTarget',
@@ -83,31 +87,55 @@ class Grid extends Component {
 
   onCellCancelDrag = () => this.props.cancelDrag();
 
-  render() {
-    const {
-      cellState,
-      gridHeight,
-      gridWidth,
-    } = this.props;
+  renderCell = cellClassNames => index => {
+    const { cellState } = this.props;
+
+    return (
+      <Cell
+        cellClassName={cellClassNames[index] || ''}
+        cellState={cellState(index)}
+        index={index}
+        key={index}
+        onBeginDrag={this.onBeginDrag}
+        onCancelDrag={this.onCellCancelDrag}
+        onClick={this.onCellClick}
+        onDragOver={this.onCellDragOver}
+      />
+    );
+  }
+
+  renderGridData() {
+    const { gridHeight, gridWidth, normalizedConstraints } = this.props;
+    const { h, v } = normalizedConstraints;
 
     const cellIndices = range(0, gridHeight * gridWidth);
     const cellClassNames = this.getCellClassNames();
+    const cells = cellIndices.map(this.renderCell(cellClassNames));
+    const cellGrid = splitEvery(gridWidth, cells);
+
+    const renderConstraints = row => row.map(c => (
+      c === null ? null : <div className="constraint">{c}</div>
+    ));
+
+    const constraintsH = h.map(renderConstraints);
+    const constraintsV = v.map(renderConstraints);
+
+    return constraintsV.concat(zipWith((a, b) => a.concat(b), constraintsH, cellGrid));
+  }
+
+  render() {
+    const {
+      fullHeight,
+      gridHeight,
+      fullWidth,
+    } = this.props;
 
     return (
-      <div className="grid" style={this.getStyle()}>
-        {cellIndices.map(index => (
-          <Cell
-            cellClassName={cellClassNames[index] || ''}
-            cellState={cellState(index)}
-            index={index}
-            key={index}
-            onBeginDrag={this.onBeginDrag}
-            onCancelDrag={this.onCellCancelDrag}
-            onClick={this.onCellClick}
-            onDragOver={this.onCellDragOver}
-          />
-        ))}
-      </div>
+      <BaseGrid
+        data={this.renderGridData()}
+        height={fullHeight}
+        width={fullWidth}
+      />
     );
   }
 }

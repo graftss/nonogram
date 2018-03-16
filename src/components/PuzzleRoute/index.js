@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Icon } from 'semantic-ui-react';
+import { Container, Icon } from 'semantic-ui-react';
 
 import CompleteModal from './CompleteModal';
-import ConstraintsV from '../ConstraintsV';
-import ConstraintsH from '../ConstraintsH';
 import Grid from '../Grid';
 import Palette from '../Palette';
 import connect from '../../state/connect';
@@ -62,23 +60,17 @@ class App extends Component {
 
     return (
       <div className="App">
-        <ConstraintsV
-          gridSize={gridWidth}
-          constraintsV={constraintsV}
-        />
-        <ConstraintsH
-          gridSize={gridHeight}
-          constraintsH={constraintsH}
-        />
-        <Grid />
-        <Palette
-          activeCellState={activeCellState}
-          canRedo={canRedo}
-          canUndo={canUndo}
-          redo={redo}
-          setActiveCellState={setActiveCellState}
-          undo={undo}
-        />
+        <Container textAlign="center">
+          <Grid />
+          <Palette
+            activeCellState={activeCellState}
+            canRedo={canRedo}
+            canUndo={canUndo}
+            redo={redo}
+            setActiveCellState={setActiveCellState}
+            undo={undo}
+          />
+        </Container>
         <CompleteModal
           onClose={this.onModalClose}
           open={this.state.completeModalOpen}

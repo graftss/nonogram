@@ -52,3 +52,19 @@ export const longestEltLength = lists => lists.reduce(
   (acc, next) => Math.max(acc, next.length),
   0,
 );
+
+export const pad = (minLength, padValue, padLeft, array) => {
+  const padding = [];
+
+  for (let i = 0; i < minLength - array.length; i++) {
+    padding.push(padValue);
+  }
+
+  return padLeft ? padding.concat(array) : array.concat(padding);
+};
+
+const matrixColumn = (matrix, index) => matrix.map(row => row[index]);
+
+export const rotateMatrix = matrix => (
+  matrix[0].map((_, index) => matrixColumn(matrix, index))
+);

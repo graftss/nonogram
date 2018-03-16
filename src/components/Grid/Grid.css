@@ -1,17 +1,14 @@
 .grid {
-  height: 60vh;
-  width: 60vh;
-  margin: 0 auto;
-
+  text-align: center;
+  vertical-align: middle;
   display: inline-grid;
-  grid-gap: 0px;
+  grid-gap: 1px;
 }
 
 .filled {
   background-color: black;
   width: 100%;
   height: 100%;
-  border-radius: 5px;
 }
 
 .unfilled {
@@ -21,34 +18,14 @@
 }
 
 .cell {
-  border: 1px solid cornflowerblue;
-  padding: 3px;
+  border: .5px solid cornflowerblue;
+  height: 100%;
+  width: 100%;
 }
 
-.constraints-v {
-  margin: 0 auto;
-  text-align: center;
-  font-size: 1.2em;
-  display: grid;
-  width: 60vh;
-}
-
-.constraints-h {
-  text-align: right;
-  vertical-align: top;
-  width: calc(50vw - 30vh);
-  height: 60vh;
-  font-size: 1.2em;
-  display: inline-grid;
-  grid-auto-flow: row;
-}
-
-.constraints-h-cell {
-  margin: auto 0;
-}
-
-.constraints-h-number {
-  margin-left: 3px;
+.constraint {
+  font-size: 20px;
+  margin-top: 5px;
 }
 
 .palette-container {
