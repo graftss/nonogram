@@ -63,13 +63,7 @@ class Cell extends Component {
 
   innerCellClass() {
     switch (this.props.cellState) {
-      case undefined:
-      case CELL_STATES.EMPTY: return '';
-
-      case CELL_STATES.FILLED: return 'filled';
-
       case CELL_STATES.UNFILLED: return 'unfilled';
-
       default: return '';
     }
   }

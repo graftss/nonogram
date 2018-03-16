@@ -37,12 +37,12 @@ const initialState = {
 
   // data comprising a puzzle
   width: 10,
-  height: 5,
+  height: 15,
   colors: { 1: 'black', 2: 'pink', 3: 'orange' },
   blocksV: [[2], [], [1], [1], [1], [1], [1], [1], [1], [1]],
   colorsV: [[2], [], [1], [3], [1], [3], [1], [1], [1], [1]],
-  blocksH: [[1], [1], [1], [1, 1], [1, 4]],
-  colorsH: [[2], [2], [1], [3, 3], [1, 1]],
+  blocksH: [[1], [1], [1], [1, 1], [1, 4], [1], [1], [1], [1, 1], [1, 4], [1], [1], [1], [1, 1], [1, 4]],
+  colorsH: [[2], [2], [1], [3, 3], [1, 1], [2], [2], [1], [3, 3], [1, 1], [2], [2], [1], [3, 3], [1, 1]],
 };
 
 const toggleFill = curry((index, state) => {
@@ -185,7 +185,12 @@ export default (state = initialState, action) => {
 
       if (dragging) return state;
 
-      return assoc('cellStates', cellStates, state);
+      const updates = {
+        cellStates,
+        history: initialState.history,
+      };
+
+      return merge(state, updates);
     }
 
     default: return state;
