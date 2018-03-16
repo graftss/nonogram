@@ -30,7 +30,7 @@ const initialState = {
   history: { past: [], future: [] },
   currentHistoryIndex: -1,
   dragStates: {},
-  size: 4,
+  size: 10,
   dragSource: undefined,
   dropTarget: undefined,
   activeCellState: CELL_STATES.FILLED,

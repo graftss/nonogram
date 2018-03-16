@@ -22,3 +22,9 @@ export const isValid = validate;
 export const canUndo = state => state.history.past.length > 0;
 
 export const canRedo = state => state.history.future.length > 0;
+
+export const gridDragSource = prop('dragSource');
+
+export const gridDropTarget = prop('dropTarget');
+
+export const gridDragging = prop('dragging');

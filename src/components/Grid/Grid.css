@@ -22,7 +22,7 @@
 
 .cell {
   border: 1px solid cornflowerblue;
-  padding: 1px;
+  padding: 3px;
 }
 
 .constraints-v {
@@ -88,4 +88,44 @@
 
 .palette-unfilled {
   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M1 0 L0 1 L99 100 L100 99' fill='black' /><path d='M0 99 L99 0 L100 1 L1 100' fill='black' /></svg>");
+}
+
+:root {
+  --drag-cell-color: 2px solid red;
+}
+
+.cell-drag-top-left {
+  border-top: var(--drag-cell-color);
+  border-left: var(--drag-cell-color);
+}
+
+.cell-drag-bottom-left {
+  border-left: var(--drag-cell-color);
+  border-bottom: var(--drag-cell-color);
+}
+
+.cell-drag-top-right {
+  border-top: var(--drag-cell-color);
+  border-right: var(--drag-cell-color);
+}
+
+.cell-drag-bottom-right {
+  border-right: var(--drag-cell-color);
+  border-bottom: var(--drag-cell-color);
+}
+
+.cell-drag-bottom {
+  border-bottom: var(--drag-cell-color);
+}
+
+.cell-drag-top {
+  border-top: var(--drag-cell-color);
+}
+
+.cell-drag-left {
+  border-left: var(--drag-cell-color);
+}
+
+.cell-drag-right {
+  border-right: var(--drag-cell-color);
 }

@@ -80,6 +80,7 @@ class Cell extends Component {
 
   render() {
     const {
+      cellClassName,
       connectDragSource,
       connectDropTarget,
       index,
@@ -88,7 +89,7 @@ class Cell extends Component {
 
     return connectDropTarget(connectDragSource(
       <div
-        className="cell"
+        className={`cell ${cellClassName}`}
         onClick={() => onClick(index)}
       >
         <div className={this.innerCellClass()}>
