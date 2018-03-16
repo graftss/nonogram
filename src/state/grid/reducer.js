@@ -94,10 +94,6 @@ const redoHistory = state => {
   });
 };
 
-const clearFuture = state => (
-  assocPath(['history', 'future'], [], state)
-);
-
 export default (state = initialState, action) => {
   const { payload, type } = action;
 

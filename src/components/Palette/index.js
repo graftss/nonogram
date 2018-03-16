@@ -26,7 +26,7 @@ export default class Palette extends Component {
 
     if (keyCode >= lowerBound && keyCode <= upperBound) {
       const index = keyCode - lowerBound;
-      this.props.setActiveCellState(palette[index].cellState);
+      setActiveCellState(palette[index].cellState);
     } else if (keyCode === 81 && shiftKey) {
       // shift + q
       redo();

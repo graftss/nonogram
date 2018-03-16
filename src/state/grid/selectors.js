@@ -1,4 +1,4 @@
-import { curry, prop, repeat } from 'ramda';
+import { curry, prop } from 'ramda';
 
 import validate from './validate';
 import { longestEltLength, pad, rotateMatrix } from '../../utils';

@@ -6,7 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import './Grid.css';
 import connect from '../../state/connect';
 import Cell from '../Cell';
-import BaseGrid from './Grid';
+import BaseGrid from './BaseGrid';
 import { coordsToIndex, rectCoordRanges } from '../../utils';
 
 const connections = {
@@ -126,7 +126,6 @@ class Grid extends Component {
   render() {
     const {
       fullHeight,
-      gridHeight,
       fullWidth,
     } = this.props;
 

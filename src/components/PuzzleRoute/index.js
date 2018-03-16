@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Icon } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 
 import CompleteModal from './CompleteModal';
 import Grid from '../Grid';
@@ -49,10 +49,6 @@ class App extends Component {
       activeCellState,
       canRedo,
       canUndo,
-      constraintsH,
-      constraintsV,
-      gridHeight,
-      gridWidth,
       redo,
       setActiveCellState,
       undo,
