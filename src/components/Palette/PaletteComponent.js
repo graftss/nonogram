@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 
 const getClassName = (activeCellState, data) => [
   'palette',
@@ -12,8 +12,10 @@ export default ({
   canRedo,
   canUndo,
   colors,
+  loadState,
   palette,
   redo,
+  saveState,
   setActiveCellState,
   undo,
 }) => (
@@ -30,28 +32,37 @@ export default ({
       </div>
     ))}
     <div style={{ marginTop: '20px' }}>
-      <div>
-        <span className="palette-action">
-          <Icon
-            disabled={!canUndo}
-            fitted
-            onClick={undo}
-            name="arrow left"
-            size="large"
-          />
-        </span>
-      </div>
-      <div>
-        <span className="palette-action">
-          <Icon
-            disabled={!canRedo}
-            fitted
-            onClick={redo}
-            name="arrow right"
-            size="large"
-          />
-        </span>
-      </div>
+      <Button
+        className="palette-button"
+        content="undo (Q)"
+        disabled={!canUndo}
+        fluid
+        onClick={undo}
+        size="mini"
+      />
+      <Button
+        className="palette-button"
+        content="redo (⇧Q)"
+        disabled={!canRedo}
+        fluid
+        onClick={redo}
+        size="mini"
+      />
+      <Button
+        className="palette-button"
+        content="save state (⇧S)"
+        fluid
+        onClick={saveState}
+        size="mini"
+      />
+      <Button
+        className="palette-button"
+        content="load state (⇧L)"
+        fluid
+        onClick={loadState}
+        size="mini"
+      />
     </div>
   </div>
 );
+
