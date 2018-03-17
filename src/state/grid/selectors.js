@@ -78,3 +78,5 @@ export const gridDragSource = prop('dragSource');
 export const gridDropTarget = prop('dropTarget');
 
 export const gridDragging = prop('dragging');
+
+export const startTime = prop('startTime');

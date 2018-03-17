@@ -15,7 +15,7 @@ export default class Timer extends Component {
   }
 
   componentWillMount() {
-    this.setState({ startTime: getTime(), elapsed: 0 });
+    this.setState({ elapsed: 0 });
     this.tickInterval = setInterval(this.tick, 1000);
   }
 
@@ -24,16 +24,14 @@ export default class Timer extends Component {
   }
 
   tick = () => {
-    const { startTime } = this.state;
+    const { startTime } = this.props;
     const elapsed = Math.round((getTime() - startTime) / 1000);
 
     this.setState({ elapsed });
   }
 
   render() {
-    const { elapsed } = this.state;
-    const { seconds, minutes } = toMinutes(elapsed);
-
+    const { seconds, minutes } = toMinutes(this.state.elapsed);
     const paddedSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
     return <span className="timer"><b>{minutes}:{paddedSeconds}</b></span>;

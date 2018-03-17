@@ -29,11 +29,12 @@ export default ({
   redo,
   saveState,
   setActiveCellState,
+  startTime,
   undo,
 }) => (
   <div className="palette-container">
     <div className="timer-container">
-      <Timer />
+      <Timer startTime={startTime} />
     </div>
     {palette.map((data, index) => (
       <div key={data.cellState}>

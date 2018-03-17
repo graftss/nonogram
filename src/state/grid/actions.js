@@ -45,3 +45,5 @@ export const redo = constantCreator(TYPES.GRID_REDO);
 export const saveState = argCreator(TYPES.GRID_SAVE_STATE, ['index']);
 
 export const loadState = argCreator(TYPES.GRID_LOAD_STATE, ['index']);
+
+export const setStartTime = argCreator(TYPES.GRID_SET_START_TIME, ['time']);

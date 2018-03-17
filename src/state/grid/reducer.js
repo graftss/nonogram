@@ -35,6 +35,7 @@ const initialState = {
   activeCellState: CELL_STATES.UNFILLED,
   dragging: false,
   focused: undefined,
+  startTime: undefined,
 
   // data comprising a puzzle
   width: 10,
@@ -202,6 +203,12 @@ export default (state = initialState, action) => {
 
     case TYPES.GRID_UNFOCUS_CELL: {
       return assoc('focused', undefined, state);
+    }
+
+    case TYPES.GRID_SET_START_TIME: {
+      const { time } = payload;
+
+      return assoc('startTime', time, state);
     }
 
     default: return state;

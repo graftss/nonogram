@@ -5,6 +5,7 @@ import CompleteModal from './CompleteModal';
 import Grid from '../Grid';
 import Palette from '../Palette';
 import connect from '../../state/connect';
+import { getTime } from '../../utils';
 
 const connections = {
   actions: [
@@ -13,6 +14,7 @@ const connections = {
     'redo',
     'saveState',
     'setActiveCellState',
+    'setStartTime',
     'undo',
   ],
   selectors: [
@@ -24,6 +26,7 @@ const connections = {
     'gridColors',
     'gridHeight',
     'gridWidth',
+    'startTime',
     'isValid',
   ],
 };
@@ -35,6 +38,10 @@ class App extends Component {
     this.state = {
       completeModalOpen: false,
     };
+  }
+
+  componentWillMount() {
+    this.props.setStartTime(getTime());
   }
 
   componentDidUpdate(prevProps) {
@@ -57,6 +64,7 @@ class App extends Component {
       redo,
       saveState,
       setActiveCellState,
+      startTime,
       undo,
     } = this.props;
 
@@ -73,6 +81,7 @@ class App extends Component {
             redo={redo}
             saveState={saveState}
             setActiveCellState={setActiveCellState}
+            startTime={startTime}
             undo={undo}
           />
         </Container>
