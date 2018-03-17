@@ -54,14 +54,18 @@
 .palette-container {
   display: inline-block;
   vertical-align: top;
-  margin-left: 10vh;
+  margin-left: 5vw;
   border: 1px solid black;
   background-color: #f6f6f6;
 }
 
-.palette {
-  width: 30px;
-  height: 30px;
+.palette-colors-container {
+  margin-top: 20px;
+}
+
+.palette-color {
+  width: 60px;
+  height: 60px;
   border: 1px solid lightgrey;
   display: inline-block;
   vertical-align: middle;

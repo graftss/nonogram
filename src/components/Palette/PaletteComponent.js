@@ -4,7 +4,7 @@ import { Button } from 'semantic-ui-react';
 import Timer from './Timer';
 
 const getClassName = (activeCellState, data) => [
-  'palette',
+  'palette-color',
   data.className,
   activeCellState === data.cellState ? 'palette-active' : '',
 ].join(' ');
@@ -36,17 +36,19 @@ export default ({
     <div className="timer-container">
       <Timer startTime={startTime} />
     </div>
-    {palette.map((data, index) => (
-      <div key={data.cellState}>
-        <span className="palette-hotkey">{index + 1} </span>
-        <div
-          style={{ backgroundColor: data.color }}
-          className={getClassName(activeCellState, data)}
-          onClick={() => setActiveCellState(data.cellState)}
-        >
+    <div className="palette-colors-container">
+      {palette.map((data, index) => (
+        <div key={data.cellState}>
+          <span className="palette-hotkey">{index + 1} </span>
+          <div
+            style={{ backgroundColor: data.color }}
+            className={getClassName(activeCellState, data)}
+            onClick={() => setActiveCellState(data.cellState)}
+          >
+          </div>
         </div>
-      </div>
-    ))}
+      ))}
+    </div>
     <div style={{ marginTop: '20px' }}>
       <PaletteButton
         content="undo (Q)"
