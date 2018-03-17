@@ -222,6 +222,12 @@ export default (state = initialState, action) => {
       return assoc('startTime', time, state);
     }
 
+    case TYPES.GRID_LOAD_PUZZLE: {
+      const { puzzle } = payload;
+
+      return assoc('puzzle', puzzle, state);
+    }
+
     default: return state;
   }
 }

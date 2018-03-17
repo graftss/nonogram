@@ -6,9 +6,11 @@ import Grid from '../Grid';
 import Palette from '../Palette';
 import connect from '../../state/connect';
 import { getTime } from '../../utils';
+import puzzles from '../../state/grid/puzzles';
 
 const connections = {
   actions: [
+    'loadPuzzle',
     'loadState',
     'push',
     'redo',
@@ -71,6 +73,7 @@ class App extends Component {
     return (
       <div className="App">
         <Container textAlign="center">
+          <button onClick={() => this.props.loadPuzzle(puzzles[0])}> hi </button>
           <Grid />
           <Palette
             activeCellState={activeCellState}

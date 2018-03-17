@@ -5,6 +5,7 @@ export const TYPES = keyMirror([
   'GRID_CANCEL_DRAG',
   'GRID_DRAG_OVER',
   'GRID_FOCUS_CELL',
+  'GRID_LOAD_PUZZLE',
   'GRID_LOAD_STATE',
   'GRID_REDO',
   'GRID_SAVE_STATE',
@@ -47,3 +48,5 @@ export const saveState = argCreator(TYPES.GRID_SAVE_STATE, ['index']);
 export const loadState = argCreator(TYPES.GRID_LOAD_STATE, ['index']);
 
 export const setStartTime = argCreator(TYPES.GRID_SET_START_TIME, ['time']);
+
+export const loadPuzzle = argCreator(TYPES.GRID_LOAD_PUZZLE, ['puzzle']);
