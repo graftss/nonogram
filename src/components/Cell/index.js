@@ -61,6 +61,16 @@ class Cell extends Component {
     }
   }
 
+  onMouseOver = () => {
+    const { focusCell, index } = this.props;
+
+    focusCell(index);
+  }
+
+  onMouseLeave = () => {
+    this.props.unfocusCell();
+  }
+
   innerCellClass() {
     switch (this.props.cellState) {
       case CELL_STATES.UNFILLED: return 'unfilled';
@@ -82,6 +92,8 @@ class Cell extends Component {
       <div
         className={`cell ${cellClassName}`}
         onClick={() => onClick(index)}
+        onMouseOver={this.onMouseOver}
+        onMouseLeave={this.onMouseLeave}
         style={{ backgroundColor: color }}
       >
         <div className={this.innerCellClass()}>

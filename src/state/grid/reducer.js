@@ -34,6 +34,7 @@ const initialState = {
   dropTarget: undefined,
   activeCellState: CELL_STATES.UNFILLED,
   dragging: false,
+  focused: undefined,
 
   // data comprising a puzzle
   width: 10,
@@ -191,6 +192,16 @@ export default (state = initialState, action) => {
       };
 
       return merge(state, updates);
+    }
+
+    case TYPES.GRID_FOCUS_CELL: {
+      const { index } = payload;
+
+      return assoc('focused', index, state);
+    }
+
+    case TYPES.GRID_UNFOCUS_CELL: {
+      return assoc('focused', undefined, state);
     }
 
     default: return state;

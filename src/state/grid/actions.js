@@ -4,6 +4,7 @@ export const TYPES = keyMirror([
   'GRID_BEGIN_DRAG',
   'GRID_CANCEL_DRAG',
   'GRID_DRAG_OVER',
+  'GRID_FOCUS_CELL',
   'GRID_LOAD_STATE',
   'GRID_REDO',
   'GRID_SAVE_STATE',
@@ -12,9 +13,14 @@ export const TYPES = keyMirror([
   'GRID_TOGGLE_CELL',
   'GRID_TOGGLE_RECT',
   'GRID_UNDO',
+  'GRID_UNFOCUS_CELL',
 ]);
 
 export const toggleCell = argCreator(TYPES.GRID_TOGGLE_CELL, ['index']);
+
+export const focusCell = argCreator(TYPES.GRID_FOCUS_CELL, ['index']);
+
+export const unfocusCell = constantCreator(TYPES.GRID_UNFOCUS_CELL);
 
 export const toggleRect = argCreator(
   TYPES.GRID_TOGGLE_RECT,

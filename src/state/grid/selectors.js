@@ -1,7 +1,12 @@
 import { curry, prop, zip, zipWith } from 'ramda';
 
 import validate from './validate';
-import { longestEltLength, pad, rotateMatrix } from '../../utils';
+import {
+  indexToCoords,
+  longestEltLength,
+  pad,
+  rotateMatrix,
+} from '../../utils';
 
 export const cellStates = prop('cellStates');
 
@@ -11,6 +16,8 @@ export const cellState = curry(
     return dragState === undefined ? state.cellStates[index] : dragState;
   }
 );
+
+export const focusedCell = prop('focused');
 
 export const gridWidth = prop('width');
 
@@ -38,14 +45,20 @@ export const fullHeight = state => gridHeight(state) + constraintHeight(state);
 
 const padLeftMap = (length, array) => array.map(row => pad(length, null, true, row));
 
+const addFocusFlag = c => c && [...c, true];
+
 export const normalizedConstraints = state => {
+  const [focusCol, focusRow] = indexToCoords(gridWidth(state), focusedCell(state));
+
   const ch = constraintsH(state);
   const zippedH = zipWith(zip, ch.blocks, ch.colors);
-  const normalizedH = padLeftMap(constraintWidth(state), zippedH);
+  const normalizedH = padLeftMap(constraintWidth(state), zippedH)
+    .map((row, index) => focusRow !== index ? row : row.map(addFocusFlag));
 
   const cv = constraintsV(state);
   const zippedV = zipWith(zip, cv.blocks, cv.colors);
-  const paddedV = padLeftMap(constraintHeight(state), zippedV);
+  const paddedV = padLeftMap(constraintHeight(state), zippedV)
+    .map((col, index) => focusCol !== index ? col : col.map(addFocusFlag));
   const orientedV = rotateMatrix(paddedV);
   const normalizedV = padLeftMap(fullWidth(state), orientedV);
 

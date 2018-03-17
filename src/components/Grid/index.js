@@ -14,11 +14,14 @@ const connections = {
     'beginDrag',
     'cancelDrag',
     'dragOver',
+    'focusCell',
     'toggleCell',
+    'unfocusCell',
   ],
   selectors: [
     'cellColor',
     'cellState',
+    'focusedCell',
     'fullHeight',
     'fullWidth',
     'normalizedConstraints',
@@ -90,7 +93,7 @@ class Grid extends Component {
   onCellCancelDrag = () => this.props.cancelDrag();
 
   renderCell = dragAreaClassNames => index => {
-    const { cellState, cellColor } = this.props;
+    const { cellState, cellColor, focusCell, unfocusCell } = this.props;
     const color = cellColor(index);
 
     return (
@@ -98,12 +101,14 @@ class Grid extends Component {
         cellClassName={dragAreaClassNames[index] || ''}
         cellState={cellState(index)}
         color={color}
+        focusCell={focusCell}
         index={index}
         key={index}
         onBeginDrag={this.onBeginDrag}
         onCancelDrag={this.onCellCancelDrag}
         onClick={this.onCellClick}
         onDragOver={this.onCellDragOver}
+        unfocusCell={unfocusCell}
       />
     );
   }
@@ -135,18 +140,26 @@ class Grid extends Component {
   }
 
   renderGridData() {
-    const { gridColor, normalizedConstraints: { h, v } } = this.props;
+    const {
+      focusedCell,
+      gridColor,
+      normalizedConstraints: { h, v },
+    } = this.props;
 
     const cellGrid = this.renderCellGrid();
 
     const renderConstraints = row => row.map(c => ({
       node: c ? <span className="constraint noselect">{c[0]}</span> : null,
       cellProps: {
-        className: c ? 'constraint-cell' : 'constraint-cell-empty',
+        className: (c ? 'constraint-cell ' : 'constraint-cell-empty ') +
+          ((c && c[2]) ? 'constraint-cell-focused ' : ''),
 
         // the font color is set as the same as the background color here, then
         // inverted via css
-        style: c && { backgroundColor: gridColor(c[1]), color: gridColor(c[1]) },
+        style: c && {
+          backgroundColor: gridColor(c[1]),
+          color: gridColor(c[1]),
+        },
       },
     }));
 
