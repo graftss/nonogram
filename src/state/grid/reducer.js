@@ -37,14 +37,15 @@ const initialState = {
   focused: undefined,
   startTime: undefined,
 
-  // data comprising a puzzle
-  width: 10,
-  height: 15,
-  colors: { 1: 'black', 2: 'pink', 3: 'orange' },
-  blocksV: [[2], [], [1], [1], [1], [1], [1], [1], [1], [1]],
-  colorsV: [[2], [], [1], [3], [1], [3], [1], [1], [1], [1]],
-  blocksH: [[1], [1], [1], [1, 1], [1, 4], [1], [1], [1], [1, 1], [1, 4], [1], [1], [1], [1, 1], [1, 4]],
-  colorsH: [[2], [2], [1], [3, 3], [1, 1], [2], [2], [1], [3, 3], [1, 1], [2], [2], [1], [3, 3], [1, 1]],
+  puzzle: {
+    width: 10,
+    height: 15,
+    colors: { 1: 'black', 2: 'pink', 3: 'orange' },
+    blocksV: [[2], [], [1], [1], [1], [1], [1], [1], [1], [1]],
+    colorsV: [[2], [], [1], [3], [1], [3], [1], [1], [1], [1]],
+    blocksH: [[1], [1], [1], [1, 1], [1, 4], [1], [1], [1], [1, 1], [1, 4], [1], [1], [1], [1, 1], [1, 4]],
+    colorsH: [[2], [2], [1], [3, 3], [1, 1], [2], [2], [1], [3, 3], [1, 1], [2], [2], [1], [3, 3], [1, 1]],
+  }
 };
 
 const toggleFill = curry((index, state) => {
@@ -122,7 +123,11 @@ export default (state = initialState, action) => {
 
     case TYPES.GRID_DRAG_OVER: {
       const { index } = payload;
-      const { activeCellState, dragSource, width } = state;
+      const {
+        activeCellState,
+        dragSource,
+        puzzle: { width },
+      } = state;
 
       const cellState = state.cellStates[dragSource];
       const indices = indicesInRect(width, dragSource, index);
@@ -141,7 +146,13 @@ export default (state = initialState, action) => {
     }
 
     case TYPES.GRID_CANCEL_DRAG: {
-      const { activeCellState, cellStates, dragSource, dropTarget, width } = state;
+      const {
+        activeCellState,
+        cellStates,
+        dragSource,
+        dropTarget,
+        puzzle: { width },
+      } = state;
 
       const cellState = state.cellStates[dragSource];
       const indices = indicesInRect(width, dragSource, dropTarget);

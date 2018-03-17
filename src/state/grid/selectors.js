@@ -1,4 +1,4 @@
-import { curry, prop, zip, zipWith } from 'ramda';
+import { curry, path, prop, zip, zipWith } from 'ramda';
 
 import validate from './validate';
 import {
@@ -19,11 +19,11 @@ export const cellState = curry(
 
 export const focusedCell = prop('focused');
 
-export const gridWidth = prop('width');
+export const gridWidth = path(['puzzle', 'width']);
 
-export const gridHeight = prop('height');
+export const gridHeight = path(['puzzle', 'height']);
 
-export const gridColors = prop('colors');
+export const gridColors = path(['puzzle', 'colors']);
 
 export const gridColor = curry((state, id) => gridColors(state)[id]);
 
@@ -31,9 +31,15 @@ export const cellColor = curry(
   (state, index) => gridColors(state)[cellState(state, index)]
 );
 
-export const constraintsH = state => ({ blocks: state.blocksH, colors: state.colorsH });
+export const constraintsH = state => ({
+  blocks: state.puzzle.blocksH,
+  colors: state.puzzle.colorsH
+});
 
-export const constraintsV = state => ({ blocks: state.blocksV, colors: state.colorsV });
+export const constraintsV = state => ({
+  blocks: state.puzzle.blocksV,
+  colors: state.puzzle.colorsV,
+});
 
 export const constraintWidth = state => longestEltLength(constraintsH(state).blocks);
 
