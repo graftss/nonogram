@@ -73,7 +73,7 @@ class App extends Component {
     return (
       <div className="App">
         <Container textAlign="center">
-          <button onClick={() => this.props.loadPuzzle(puzzles[0])}> hi </button>
+          <button onClick={() => this.props.loadPuzzle(puzzles[1])}> hi </button>
           <Grid />
           <Palette
             activeCellState={activeCellState}

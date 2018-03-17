@@ -141,7 +141,6 @@ class Grid extends Component {
 
   renderGridData() {
     const {
-      focusedCell,
       gridColor,
       normalizedConstraints: { h, v },
     } = this.props;
@@ -165,6 +164,8 @@ class Grid extends Component {
 
     const constraintsH = h.map(renderConstraints);
     const constraintsV = v.map(renderConstraints);
+
+    console.log({ constraintsH, constraintsV });
 
     return constraintsV.concat(zipWith((a, b) => a.concat(b), constraintsH, cellGrid));
   }

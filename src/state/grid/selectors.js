@@ -1,8 +1,8 @@
 import { curry, path, prop, zip, zipWith } from 'ramda';
+import { createSelector, createStructuredSelector } from 'reselect';
 
 import validate from './validate';
 import {
-  indexToCoords,
   longestEltLength,
   pad,
   rotateMatrix,
@@ -31,19 +31,27 @@ export const cellColor = curry(
   (state, index) => gridColors(state)[cellState(state, index)]
 );
 
-export const constraintsH = state => ({
-  blocks: state.puzzle.blocksH,
-  colors: state.puzzle.colorsH
+export const blocksH = path(['puzzle', 'blocksH']);
+
+export const blocksV = path(['puzzle', 'blocksV']);
+
+export const colorsH = path(['puzzle', 'colorsH']);
+
+export const colorsV = path(['puzzle', 'colorsV']);
+
+export const constraintsH = createStructuredSelector({
+  blocks: blocksH,
+  colors: colorsH,
 });
 
-export const constraintsV = state => ({
-  blocks: state.puzzle.blocksV,
-  colors: state.puzzle.colorsV,
+export const constraintsV = createStructuredSelector({
+  blocks: blocksV,
+  colors: colorsV,
 });
 
-export const constraintWidth = state => longestEltLength(constraintsH(state).blocks);
+export const constraintWidth = state => longestEltLength(blocksH(state));
 
-export const constraintHeight = state => longestEltLength(constraintsV(state).blocks);
+export const constraintHeight = state => longestEltLength(blocksV(state));
 
 export const fullWidth = state => gridWidth(state) + constraintWidth(state);
 
@@ -51,25 +59,27 @@ export const fullHeight = state => gridHeight(state) + constraintHeight(state);
 
 const padLeftMap = (length, array) => array.map(row => pad(length, null, true, row));
 
-const addFocusFlag = c => c && [...c, true];
+// const addFocusFlag = c => c && [...c, true];
 
-export const normalizedConstraints = state => {
-  const [focusCol, focusRow] = indexToCoords(gridWidth(state), focusedCell(state));
+export const normalizedConstraints = createSelector(
+  gridWidth,
+  constraintWidth,
+  fullWidth,
+  constraintHeight,
+  constraintsH,
+  constraintsV,
+  (gridWidth, constraintWidth, fullWidth, constraintHeight, constraintsH, constraintsV) => {
+    const zippedH = zipWith(zip, constraintsH.blocks, constraintsH.colors);
+    const normalizedH = padLeftMap(constraintWidth, zippedH);
 
-  const ch = constraintsH(state);
-  const zippedH = zipWith(zip, ch.blocks, ch.colors);
-  const normalizedH = padLeftMap(constraintWidth(state), zippedH)
-    .map((row, index) => focusRow !== index ? row : row.map(addFocusFlag));
+    const zippedV = zipWith(zip, constraintsV.blocks, constraintsV.colors);
+    const paddedV = padLeftMap(constraintHeight, zippedV);
+    const orientedV = rotateMatrix(paddedV);
+    const normalizedV = padLeftMap(fullWidth, orientedV);
 
-  const cv = constraintsV(state);
-  const zippedV = zipWith(zip, cv.blocks, cv.colors);
-  const paddedV = padLeftMap(constraintHeight(state), zippedV)
-    .map((col, index) => focusCol !== index ? col : col.map(addFocusFlag));
-  const orientedV = rotateMatrix(paddedV);
-  const normalizedV = padLeftMap(fullWidth(state), orientedV);
-
-  return { h: normalizedH, v: normalizedV };
-};
+    return { h: normalizedH, v: normalizedV };
+  }
+);
 
 export const activeCellState = prop('activeCellState');
 
