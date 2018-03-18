@@ -6,6 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import './Grid.css';
 import connect from '../../state/connect';
 import { coordsToIndex, indexToCoords, rectCoordRanges } from '../../utils';
+import { CELL_STATES } from '../../state/constants';
 
 const connections = {
   actions: [
@@ -93,11 +94,15 @@ class Grid extends Component {
   renderCell = dragAreaClassNames => index => {
     const {
       cellColor,
+      cellState,
       gridWidth,
     } = this.props;
 
+    const state = cellState(index);
     const [col, row] = indexToCoords(gridWidth, index);
     let cellClassName = '';
+
+    if (state === CELL_STATES.UNFILLED) cellClassName += 'unfilled ';
 
     if (col % 5 === 4) cellClassName += 'puzzle-cell-boundary-right ';
     else if (col % 5 === 0) cellClassName += 'puzzle-cell-boundary-left ';
@@ -125,15 +130,10 @@ class Grid extends Component {
     return splitEvery(gridWidth, cells);
   }
 
-  renderGridData() {
-    const {
-      gridColor,
-      normalizedConstraints: { h, v },
-    } = this.props;
+  renderNormalizedConstraint = (row, rowIndex) => row.map((c, colIndex) => {
+    const { gridColor  } = this.props;
 
-    const cellGrid = this.renderCellGrid();
-
-    const renderConstraints = (row, rowIndex) => row.map((c, colIndex) => ((
+    return (
       <td
         className={c ? 'constraint-cell ' : 'constraint-cell-empty '}
         key={[rowIndex, colIndex]}
@@ -143,11 +143,16 @@ class Grid extends Component {
         }}
       >
         {c ? <span className="constraint noselect">{c[0]}</span> : null}
-    </td>
-    )));
+      </td>
+    );
+  })
 
-    const constraintsH = h.map(renderConstraints);
-    const constraintsV = v.map(renderConstraints);
+  renderGridData() {
+    const { normalizedConstraints: { h, v } } = this.props;
+
+    const cellGrid = this.renderCellGrid();
+    const constraintsH = h.map(this.renderNormalizedConstraint);
+    const constraintsV = v.map(this.renderNormalizedConstraint);
 
     return constraintsV.concat(zipWith((a, b) => a.concat(b), constraintsH, cellGrid));
   }
