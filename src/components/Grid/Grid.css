@@ -114,8 +114,8 @@ table.puzzle-table > tbody > tr > td {
 }
 
 :root {
-  --drag-cell-border: 2px solid red;
-  --guideline-cell-border: 2px solid grey!important;
+  --drag-cell-border: 3px solid red;
+  --guideline-cell-border: 2px solid grey;
 }
 
 .puzzle-cell-boundary-left {

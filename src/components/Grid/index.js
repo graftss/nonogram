@@ -34,6 +34,15 @@ const connections = {
 }
 
 class Grid extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      mouseDown: false,
+      mouseDownIndex: undefined,
+    };
+  }
+
   getStyle() {
     const { gridHeight, gridWidth } = this.props;
 
@@ -85,7 +94,34 @@ class Grid extends Component {
 
   onBeginDrag = index => this.props.beginDrag(index);
 
-  onCellClick = index => this.props.toggleCell(index);
+  onCellClick = index => {
+    if (!this.props.gridDragging) {
+      this.props.toggleCell(index);
+    }
+  }
+
+  onCellMouseDown = index => {
+    this.setState({ mouseDown: true, mouseDownIndex: index });
+  }
+
+  onCellMouseUp = index => {
+    this.setState({ mouseDown: false });
+    if (this.props.gridDragging) {
+      this.props.cancelDrag();
+    }
+  }
+
+  onCellMouseOver = index => {
+    const { mouseDown, mouseDownIndex } = this.state;
+    const { gridDragging } = this.props;
+
+    if (mouseDown && mouseDownIndex !== index) {
+      if (!gridDragging) {
+        this.props.beginDrag(mouseDownIndex);
+      }
+      this.onCellDragOver(index);
+    }
+  }
 
   onCellDragOver = index => this.props.dragOver(index);
 
@@ -100,6 +136,7 @@ class Grid extends Component {
 
     const state = cellState(index);
     const [col, row] = indexToCoords(gridWidth, index);
+    const dragAreaClassName = dragAreaClassNames[index];
     let cellClassName = '';
 
     if (state === CELL_STATES.UNFILLED) cellClassName += 'unfilled ';
@@ -112,9 +149,12 @@ class Grid extends Component {
 
     return (
       <td
-        className={`${cellClassName} cell`}
+        className={`${cellClassName} ${dragAreaClassName} cell`}
         key={index}
-        onMouseDown={() => this.onCellClick(index)}
+        onClick={() => this.onCellClick(index)}
+        onMouseDown={() => this.onCellMouseDown(index)}
+        onMouseUp={this.onCellMouseUp}
+        onMouseOver={() => this.onCellMouseOver(index)}
         style={{ backgroundColor: cellColor(index) || 'white' }}
       />
     );
