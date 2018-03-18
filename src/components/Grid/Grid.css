@@ -1,11 +1,15 @@
-.grid {
-  text-align: center;
-  vertical-align: middle;
-  display: inline-grid;
-  grid-gap: 0px;
-  align-items: stretch;
-  border: 2px solid black;
-  background-color: #f6f6f6;
+.puzzle-table {
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+table.puzzle-table > tbody > tr > td {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  margin: 0;
+  font-size: 1em;
+  font-weight: bolder;
 }
 
 .filled {
@@ -29,7 +33,6 @@
 .constraint-cell {
   align-items: center;
   background-color: #ddd;
-  display: flex;
   font-size: 20px;
   margin: 0 auto;
   width: 100%;
@@ -112,7 +115,7 @@
 
 :root {
   --drag-cell-border: 2px solid red;
-  --guideline-cell-border: 1px solid grey;
+  --guideline-cell-border: 2px solid grey!important;
 }
 
 .puzzle-cell-boundary-left {

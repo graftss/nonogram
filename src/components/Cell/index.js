@@ -96,7 +96,8 @@ class Cell extends Component {
       >
         <div className={this.innerCellClass()}>
         </div>
-      </div>
+      </div>,
+      { dropEffect: 'move' }
     ));
   }
 }
