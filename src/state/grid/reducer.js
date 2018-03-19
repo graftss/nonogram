@@ -40,7 +40,7 @@ const initialState = {
   puzzle: {
     width: 10,
     height: 15,
-    colors: { 1: 'black', 2: 'pink', 3: 'orange' },
+    colors: { 1: 'black', 2: 'pink', 3: 'orange', 4: 'blue' },
     blocksV: [[2], [], [1], [1], [1], [1], [1], [1], [1], [1]],
     colorsV: [[2], [], [1], [3], [1], [3], [1], [1], [1], [1]],
     blocksH: [[1], [1], [1], [1, 1], [1, 4], [1], [1], [1], [1, 1], [1, 4], [1], [1], [1], [1, 1], [1, 4]],

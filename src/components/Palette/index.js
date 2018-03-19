@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { keys } from 'ramda';
 
+import './PaletteH.css';
 import PaletteComponent from './PaletteComponent';
+import PaletteComponentH from './PaletteComponentHorizontal';
 import { CELL_STATES } from '../../state/constants';
 
 const basePalette = [
@@ -62,6 +64,6 @@ export default class Palette extends Component {
   }
 
   render() {
-    return <PaletteComponent palette={this.getPalette()} {...this.props} />;
+    return <PaletteComponentH palette={this.getPalette()} {...this.props} />;
   }
 }

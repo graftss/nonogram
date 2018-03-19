@@ -73,8 +73,6 @@ class App extends Component {
     return (
       <div className="App">
         <Container textAlign="center">
-          <button onClick={() => this.props.loadPuzzle(puzzles[1])}> hi </button>
-          <Grid />
           <Palette
             activeCellState={activeCellState}
             canRedo={canRedo}
@@ -87,6 +85,8 @@ class App extends Component {
             startTime={startTime}
             undo={undo}
           />
+          <Grid />
+          <button onClick={() => this.props.loadPuzzle(puzzles[1])}> hi </button>
         </Container>
         <CompleteModal
           onClose={this.onModalClose}
